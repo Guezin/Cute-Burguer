@@ -23,5 +23,12 @@ export default createGlobalStyle`
 
   :root {
     --color-background: #EBF2F5;
+    --color-landingPage: linear-gradient(107.97deg, #9C3F3A 0%, #B32728 100%);
+    --color-buttonPrimary: #FF6400;
+    --color-textButtonPrimary: #FFF;
+    --color-buttonPrimaryHover: #B32728;
+    --color-textButtonPrimaryHover: #6C1212;
+    --color-buttonSecondary: #FFD312;
+    --color-buttonSecondaryHover: #F23132;
   }
 `
