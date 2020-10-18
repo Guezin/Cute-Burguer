@@ -1,7 +1,5 @@
 import { createGlobalStyle } from 'styled-components'
 
-import colors from './colors'
-
 export default createGlobalStyle`
   * {
     margin: 0;
@@ -10,15 +8,21 @@ export default createGlobalStyle`
   }
 
   html, body, #root {
+    width: 100vw;
+    height: 100vh;
     background-color: var(--color-background);
   }
 
   body,
-  h1,
   input,
   button,
   textarea {
     font: 600 18px 'Nunito', sans-serif;
+  }
+
+  button {
+    cursor: pointer;
+    outline-style: none;
   }
 
   :root {
@@ -26,9 +30,12 @@ export default createGlobalStyle`
     --color-landingPage: linear-gradient(107.97deg, #9C3F3A 0%, #B32728 100%);
     --color-buttonPrimary: #FF6400;
     --color-textButtonPrimary: #FFF;
-    --color-buttonPrimaryHover: #B32728;
-    --color-textButtonPrimaryHover: #6C1212;
+    --color-buttonPrimaryHover: #F23132;
+    --color-textButtonPrimaryHover: #A32121;
     --color-buttonSecondary: #FFD312;
+    --color-textButtonSecondary: #8D774B;
     --color-buttonSecondaryHover: #F23132;
+    --color-textButtonSecondaryHover: #A32121;
+    --color-textSecondary: #FFF;
   }
 `
