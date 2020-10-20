@@ -2,6 +2,7 @@ import { inject, injectable } from 'tsyringe'
 import JWT from 'jsonwebtoken'
 
 import User from '@modules/users/infra/typeorm/entities/User'
+import authConfig from '@config/auth'
 
 import IUserRepository from '@modules/users/repositories/IUserRepository'
 

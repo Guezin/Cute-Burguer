@@ -2,11 +2,13 @@ import 'reflect-metadata'
 import 'dotenv/config'
 import express, { Express, json } from 'express'
 import cors from 'cors'
+import 'express-async-errors'
 
 import '../typeorm/database/connection'
 import '../container'
 
 import Routes from './routes'
+import middlewareError from './middlewares/error'
 
 class Server {
   public readonly server: Express
@@ -22,6 +24,7 @@ class Server {
   middlewares() {
     this.server.use(json())
     this.server.use(cors())
+    this.server.use(middlewareError)
   }
 
   routes() {
