@@ -52,7 +52,7 @@ export class CreateUsers1603224925111 implements MigrationInterface {
     )
 
     await queryRunner.query(
-      "INSERT INTO users (provider, name, email, password) VALUES (true, 'Administrador', 'admin@admin.com', 'admin')"
+      "INSERT INTO users (provider, name, email, password) VALUES (true, 'Administrador', 'admin@admin.com', '$2a$08$UHJhpRYzMtB.arY8/IazaOKS5NCMQ72l7QedkgtiIGLDSwoTMsQb2')"
     )
   }
 

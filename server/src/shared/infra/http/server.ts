@@ -24,11 +24,11 @@ class Server {
   middlewares() {
     this.server.use(json())
     this.server.use(cors())
-    this.server.use(middlewareError)
   }
 
   routes() {
     this.server.use(Routes)
+    this.server.use(middlewareError)
   }
 
   main() {
