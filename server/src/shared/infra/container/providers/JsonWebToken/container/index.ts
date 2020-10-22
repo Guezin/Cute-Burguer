@@ -1,6 +1,6 @@
 import { container } from 'tsyringe'
 
 import JsonWebToken from '../implementations/JWT'
-import IJsonWebToken from '../models/IJsonWebToken'
+import IJsonWebTokenProvider from '../models/IJsonWebTokenProvider'
 
-container.registerSingleton<IJsonWebToken>('JsonWebToken', JsonWebToken)
+container.registerSingleton<IJsonWebTokenProvider>('JsonWebToken', JsonWebToken)

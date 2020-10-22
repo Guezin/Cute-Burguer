@@ -1,12 +1,12 @@
 import { inject, injectable } from 'tsyringe'
-import { compare } from 'bcrypt'
 
 import AppError from '@shared/errors/AppError'
 
 import User from '@modules/users/infra/typeorm/entities/User'
 
 import IUserRepository from '@modules/users/repositories/IUserRepository'
-import IJsonWebToken from '@shared/infra/container/providers/JsonWebToken/models/IJsonWebToken'
+import IJsonWebToken from '@shared/infra/container/providers/JsonWebToken/models/IJsonWebTokenProvider'
+import IBcrypt from '@shared/infra/container/providers/Bcrypt/models/IBcryptProvider'
 
 interface IRequest {
   email: string
@@ -25,7 +25,10 @@ class AuthUserUseCases {
     private userRepository: IUserRepository,
 
     @inject('JsonWebToken')
-    private JWT: IJsonWebToken
+    private JWT: IJsonWebToken,
+
+    @inject('Bcrypt')
+    private bcrypt: IBcrypt
   ) {}
 
   public async execute({ email, password }: IRequest): Promise<IResponse> {
@@ -35,7 +38,12 @@ class AuthUserUseCases {
       throw new AppError('Sorry email/password invalid, try again!')
     }
 
-    if (!(await compare(password, user.password))) {
+    const isValidPassword = await this.bcrypt.compareHash(
+      password,
+      user.password
+    )
+
+    if (!isValidPassword) {
       throw new AppError('Sorry email/password invalid, try again!')
     }
 

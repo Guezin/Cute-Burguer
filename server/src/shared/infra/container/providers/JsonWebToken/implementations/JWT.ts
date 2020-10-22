@@ -3,9 +3,9 @@ import { sign, verify } from 'jsonwebtoken'
 import AppError from '@shared/errors/AppError'
 import authConfig from '@config/auth'
 
-import IJsonWebToken from '../models/IJsonWebToken'
+import IJsonWebTokenProvider from '../models/IJsonWebTokenProvider'
 
-class JWT implements IJsonWebToken {
+class JWT implements IJsonWebTokenProvider {
   private secret: string | undefined
   private expiresIn: string
 
