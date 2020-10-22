@@ -2,6 +2,8 @@ import { Router, IRouter } from 'express'
 
 import AuthRoutes from '@modules/users/infra/http/routes/auth.routes'
 
+import RestaurantRoutes from '@modules/restaurants/infra/http/routes/restaurant.routes'
+
 class Routes {
   public readonly routes: IRouter
 
@@ -13,6 +15,8 @@ class Routes {
 
   main() {
     this.routes.use('/auth', AuthRoutes)
+
+    this.routes.use('/restaurants', RestaurantRoutes)
   }
 }
 
