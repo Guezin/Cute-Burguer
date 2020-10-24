@@ -1,10 +1,10 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm'
 
-export class CreateRestaurants1603399669055 implements MigrationInterface {
+export class CreateImages1603482309590 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'restaurants',
+        name: 'images',
         columns: [
           {
             name: 'id',
@@ -15,29 +15,14 @@ export class CreateRestaurants1603399669055 implements MigrationInterface {
           },
 
           {
-            name: 'name',
+            name: 'path',
             type: 'varchar'
           },
 
           {
-            name: 'latitude',
-            type: 'numeric'
-          },
-
-          {
-            name: 'longitude',
-            type: 'numeric'
-          },
-
-          {
-            name: 'opening_hours',
-            type: 'varchar'
-          },
-
-          {
-            name: 'open_on_weekends',
-            type: 'boolean',
-            default: false
+            name: 'restaurant_id',
+            type: 'uuid',
+            isNullable: true
           },
 
           {
@@ -51,12 +36,22 @@ export class CreateRestaurants1603399669055 implements MigrationInterface {
             type: 'timestamp',
             default: 'now()'
           }
+        ],
+        foreignKeys: [
+          {
+            name: 'ImagesRestaurant',
+            columnNames: ['restaurant_id'],
+            referencedTableName: 'restaurants',
+            referencedColumnNames: ['id'],
+            onUpdate: 'CASCADE',
+            onDelete: 'CASCADE'
+          }
         ]
       })
     )
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('restaurants')
+    await queryRunner.dropTable('images')
   }
 }

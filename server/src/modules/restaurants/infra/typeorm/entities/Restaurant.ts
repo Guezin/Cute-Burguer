@@ -3,6 +3,7 @@ import {
   Column,
   PrimaryGeneratedColumn,
   OneToOne,
+  OneToMany,
   JoinColumn,
   CreateDateColumn,
   UpdateDateColumn
@@ -31,17 +32,11 @@ class Restaurant {
   @Column()
   open_on_weekends: boolean
 
-  @OneToOne(() => Image, image => image.restaurant, {
+  @OneToMany(() => Image, image => image.restaurant, {
     cascade: ['insert', 'update']
   })
   @JoinColumn({ name: 'restaurant_id' })
   images: Image[]
-
-  @OneToOne(() => Address, address => address.restaurant, {
-    cascade: ['insert', 'update']
-  })
-  @JoinColumn({ name: 'restaurant_id' })
-  address: Address
 
   @CreateDateColumn()
   created_at: Date

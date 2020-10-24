@@ -2,7 +2,7 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  OneToOne,
+  ManyToOne,
   JoinColumn,
   CreateDateColumn,
   UpdateDateColumn
@@ -18,7 +18,7 @@ class Image {
   @Column()
   path: string
 
-  @OneToOne(() => Restaurant, restaurant => restaurant.images)
+  @ManyToOne(() => Restaurant, restaurant => restaurant.images)
   @JoinColumn({ name: 'restaurant_id' })
   restaurant: Restaurant
 

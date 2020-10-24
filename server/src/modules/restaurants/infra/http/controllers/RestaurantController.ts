@@ -10,27 +10,33 @@ class RestaurantController {
       latitude,
       longitude,
       opening_hours,
-      open_on_weekends
+      open_on_weekends,
+      address
     } = request.body
 
     const requestImages = request.files as Express.Multer.File[]
 
-    console.log(request.body)
-    console.log(requestImages)
+    const images = requestImages.map(image => {
+      return {
+        path: image.filename
+      }
+    })
+
+    const data = {
+      name,
+      latitude,
+      longitude,
+      opening_hours,
+      open_on_weekends,
+      address: JSON.parse(address),
+      images
+    }
 
     const createRestaurant = container.resolve(CreateRestaurantUseCases)
 
-    // const restaurant = await createRestaurant.execute({
-    //   name,
-    //   latitude,
-    //   longitude,
-    //   opening_hours,
-    //   open_on_weekends,
-    //   address,
-    //   images
-    // })
+    const restaurant = await createRestaurant.execute(data)
 
-    return response.json()
+    return response.json(restaurant)
   }
 }
 

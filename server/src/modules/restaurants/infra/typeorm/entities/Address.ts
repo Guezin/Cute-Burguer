@@ -33,9 +33,9 @@ class Address {
   @Column()
   zipcode: string
 
-  @OneToOne(() => Restaurant, restaurant => restaurant.address)
+  @OneToOne(() => Restaurant)
   @JoinColumn({ name: 'restaurant_id' })
-  restaurant: Restaurant
+  restaurant_id: string
 
   @CreateDateColumn()
   created_at: Date
