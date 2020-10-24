@@ -5,6 +5,12 @@ import authConfig from '@config/auth'
 
 import IJsonWebTokenProvider from '../models/IJsonWebTokenProvider'
 
+interface IDecoded {
+  iat: number
+  exp: number
+  sub: string
+}
+
 class JWT implements IJsonWebTokenProvider {
   private secret: string | undefined
   private expiresIn: string
@@ -27,17 +33,17 @@ class JWT implements IJsonWebTokenProvider {
     return payload
   }
 
-  public verifyToken(token: string): boolean {
+  public verifyToken(token: string): IDecoded {
     if (!this.secret) {
-      throw new AppError('Token secret is required for JWT')
+      throw new AppError('Token secret is required for JWT.')
     }
 
     try {
-      verify(token, this.secret)
+      const decoded = verify(token, this.secret)
 
-      return true
+      return decoded as IDecoded
     } catch {
-      return false
+      throw new AppError('Token JWT invalid!')
     }
   }
 }

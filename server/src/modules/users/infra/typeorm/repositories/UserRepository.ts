@@ -33,7 +33,7 @@ class UserRepository implements IUserRepository {
       provider
     })
 
-    await this.ormRepository.save(user)
+    // await this.ormRepository.save(user)
 
     return user
   }
