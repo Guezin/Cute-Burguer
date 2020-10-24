@@ -35,7 +35,7 @@ class AuthUserUseCases {
     const user = await this.userRepository.findByEmail(email)
 
     if (!user) {
-      throw new AppError('Sorry email/password invalid, try again!')
+      throw new AppError('Sorry email/password invalid, try again!', 401)
     }
 
     const isValidPassword = await this.bcrypt.compareHash(
@@ -44,7 +44,11 @@ class AuthUserUseCases {
     )
 
     if (!isValidPassword) {
-      throw new AppError('Sorry email/password invalid, try again!')
+      throw new AppError('Sorry email/password invalid, try again!', 401)
+    }
+
+    if (user.provider === false) {
+      throw new AppError('Access denied, only for admin users!', 401)
     }
 
     const token = this.JWT.generateToken(user.id)
