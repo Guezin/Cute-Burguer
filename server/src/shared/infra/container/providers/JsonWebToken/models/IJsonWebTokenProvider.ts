@@ -5,6 +5,6 @@ interface IVerifyTokenResponse {
 }
 
 export default interface IJsonWebTokenProvider {
-  generateToken: (user_id: string) => string
+  generateToken: (payload: string) => string
   verifyToken: (token: string) => IVerifyTokenResponse
 }

@@ -52,6 +52,7 @@ class AuthUserUseCases {
     }
 
     const token = this.JWT.generateToken(user.id)
+
     return { user, token }
   }
 }

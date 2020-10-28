@@ -20,17 +20,17 @@ class JWT implements IJsonWebTokenProvider {
     this.expiresIn = authConfig.jwt.expiresIn
   }
 
-  public generateToken(user_id: string): string {
+  public generateToken(payload: string): string {
     if (!this.secret) {
       throw new AppError('Token secret is required for JWT')
     }
 
-    const payload = sign({}, this.secret, {
-      subject: user_id,
+    const response = sign({}, this.secret, {
+      subject: payload,
       expiresIn: this.expiresIn
     })
 
-    return payload
+    return response
   }
 
   public verifyToken(token: string): IDecoded {

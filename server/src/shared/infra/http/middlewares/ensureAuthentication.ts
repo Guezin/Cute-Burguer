@@ -4,11 +4,7 @@ import AppError from '@shared/errors/AppError'
 
 import JsonWebToken from '@shared/infra/container/providers/JsonWebToken/implementations/JWT'
 
-export default (
-  request: Request,
-  response: Response,
-  next: NextFunction
-): void => {
+export default (request: Request, _: Response, next: NextFunction): void => {
   const authHeaders = request.headers.authorization
 
   if (!authHeaders) {
