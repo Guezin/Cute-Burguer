@@ -1,60 +1,53 @@
-// import { inject, injectable } from 'tsyringe'
+import { inject, injectable } from 'tsyringe'
+import { addHours, isAfter } from 'date-fns'
 
-// import AppError from '@shared/errors/AppError'
+import AppError from '@shared/errors/AppError'
 
-// import User from '@modules/users/infra/typeorm/entities/User'
+import IUserRepository from '@modules/users/repositories/IUserRepository'
+import IUserTokensRepository from '@modules/users/repositories/IUserTokensRepository'
+import IBcrypt from '@shared/infra/container/providers/Bcrypt/models/IBcryptProvider'
 
-// import IUserRepository from '@modules/users/repositories/IUserRepository'
-// import IJsonWebToken from '@shared/infra/container/providers/JsonWebToken/models/IJsonWebTokenProvider'
-// import IBcrypt from '@shared/infra/container/providers/Bcrypt/models/IBcryptProvider'
+interface IRequest {
+  token: string
+  password: string
+}
 
-// interface IRequest {
-//   email: string
-//   password: string
-// }
+@injectable()
+class ResetPasswordUseCases {
+  constructor(
+    @inject('UserRepository')
+    private userRepository: IUserRepository,
 
-// interface IResponse {
-//   user: User
-//   token: string
-// }
+    @inject('UserTokensRepository')
+    private userTokensRepository: IUserTokensRepository,
 
-// @injectable()
-// class AuthUserUseCases {
-//   constructor(
-//     @inject('UserRepository')
-//     private userRepository: IUserRepository,
+    @inject('Bcrypt')
+    private bcrypt: IBcrypt
+  ) {}
 
-//     @inject('JsonWebToken')
-//     private JWT: IJsonWebToken,
+  public async execute({ token, password }: IRequest): Promise<void> {
+    const userToken = await this.userTokensRepository.findByToken(token)
 
-//     @inject('Bcrypt')
-//     private bcrypt: IBcrypt
-//   ) {}
+    if (!userToken) {
+      throw new AppError('User token does not exists.')
+    }
 
-//   public async execute({ email, password }: IRequest): Promise<IResponse> {
-//     const user = await this.userRepository.findByEmail(email)
+    const compareDate = addHours(userToken.created_at, 2)
 
-//     if (!user) {
-//       throw new AppError('Sorry email/password invalid, try again!', 401)
-//     }
+    if (isAfter(Date.now(), compareDate)) {
+      throw new AppError('Token expired.')
+    }
 
-//     const isValidPassword = await this.bcrypt.compareHash(
-//       password,
-//       user.password
-//     )
+    const user = await this.userRepository.findById(userToken.user_id)
 
-//     if (!isValidPassword) {
-//       throw new AppError('Sorry email/password invalid, try again!', 401)
-//     }
+    if (!user) {
+      throw new AppError('User not found!')
+    }
 
-//     if (user.provider === false) {
-//       throw new AppError('Access denied, only for admin users!', 401)
-//     }
+    user.password = await this.bcrypt.generateHash(password)
 
-//     const token = this.JWT.generateToken(user.id)
+    await this.userRepository.save(user)
+  }
+}
 
-//     return { user, token }
-//   }
-// }
-
-// export default AuthUserUseCases
+export default ResetPasswordUseCases

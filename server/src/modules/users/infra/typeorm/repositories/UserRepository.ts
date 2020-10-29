@@ -20,6 +20,14 @@ class UserRepository implements IUserRepository {
     return user
   }
 
+  public async findById(id: string): Promise<User | undefined> {
+    const user = await this.ormRepository.findOne({
+      where: { id }
+    })
+
+    return user
+  }
+
   public async create({
     name,
     email,
@@ -36,6 +44,10 @@ class UserRepository implements IUserRepository {
     await this.ormRepository.save(user)
 
     return user
+  }
+
+  public async save(user: User): Promise<void> {
+    await this.ormRepository.save(user)
   }
 }
 
