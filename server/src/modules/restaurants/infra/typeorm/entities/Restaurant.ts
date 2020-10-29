@@ -2,7 +2,6 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  OneToOne,
   OneToMany,
   JoinColumn,
   CreateDateColumn,
@@ -10,7 +9,6 @@ import {
 } from 'typeorm'
 
 import Image from './Image'
-import Address from './Address'
 
 @Entity('restaurants')
 class Restaurant {
@@ -19,6 +17,9 @@ class Restaurant {
 
   @Column()
   name: string
+
+  @Column({ default: 'pending' })
+  status: 'pending' | 'approvaded'
 
   @Column('numeric', { precision: 2, scale: 10 })
   latitude: number

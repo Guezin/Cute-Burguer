@@ -1,10 +1,7 @@
 import { inject, injectable } from 'tsyringe'
-
-// import AppError from '@shared/errors/AppError'
-
-import Restaurant from '@modules/restaurants/infra/typeorm/entities/Restaurant'
-
-import IRestaurantRepository from '@modules/restaurants/repositories/IRestaurantRepository'
+import IRestaurantRepository, {
+  ICreateRestaurantResponse
+} from '@modules/restaurants/repositories/IRestaurantRepository'
 
 interface IRequest {
   name: string
@@ -24,9 +21,8 @@ interface IRequest {
     path: string
   }>
 }
-
 @injectable()
-class AuthUserUseCases {
+class CreateRestaurantUseCases {
   constructor(
     @inject('RestaurantRepository')
     private restaurantRepository: IRestaurantRepository
@@ -40,7 +36,7 @@ class AuthUserUseCases {
     open_on_weekends,
     address,
     images
-  }: IRequest): Promise<Restaurant> {
+  }: IRequest): Promise<ICreateRestaurantResponse> {
     const restaurant = await this.restaurantRepository.create({
       name,
       latitude,
@@ -55,4 +51,4 @@ class AuthUserUseCases {
   }
 }
 
-export default AuthUserUseCases
+export default CreateRestaurantUseCases

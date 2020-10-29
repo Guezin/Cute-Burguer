@@ -36,27 +36,22 @@ class RestaurantRepository implements IRestaurantRepository {
     await this.ormRepository.save(restaurant)
 
     const { street, number, neighborhood, city, state, zipcode } = address
-    await this.ormRepository.manager.getRepository(Address).save({
-      street,
-      number,
-      neighborhood,
-      city,
-      state,
-      zipcode,
-      restaurant_id: restaurant.id
-    })
+    const _address = await this.ormRepository.manager
+      .getRepository(Address)
+      .save({
+        street,
+        number,
+        neighborhood,
+        city,
+        state,
+        zipcode,
+        restaurant_id: restaurant.id
+      })
 
-    const response = {
-      name,
-      latitude,
-      longitude,
-      opening_hours,
-      open_on_weekends,
-      address,
-      images
+    return {
+      restaurant,
+      address: _address
     }
-
-    return response
   }
 }
 

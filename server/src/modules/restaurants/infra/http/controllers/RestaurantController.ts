@@ -3,6 +3,8 @@ import { container } from 'tsyringe'
 
 import CreateRestaurantUseCases from '@modules/restaurants/useCases/CreateRestaurantUseCases'
 
+import restaurantView from '../views/restaurant_view'
+
 class RestaurantController {
   public async store(request: Request, response: Response): Promise<Response> {
     const {
@@ -27,7 +29,7 @@ class RestaurantController {
       latitude,
       longitude,
       opening_hours,
-      open_on_weekends,
+      open_on_weekends: open_on_weekends === 'true',
       address: JSON.parse(address),
       images
     }
@@ -36,7 +38,7 @@ class RestaurantController {
 
     const restaurant = await createRestaurant.execute(data)
 
-    return response.json(restaurant)
+    return response.json(restaurantView.render(restaurant))
   }
 }
 
