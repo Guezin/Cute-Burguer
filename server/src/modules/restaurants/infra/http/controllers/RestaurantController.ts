@@ -1,11 +1,26 @@
 import { Request, Response } from 'express'
 import { container } from 'tsyringe'
 
+import ListRestaurantUseCases from '@modules/restaurants/useCases/ListRestaurantUseCases'
 import CreateRestaurantUseCases from '@modules/restaurants/useCases/CreateRestaurantUseCases'
 
 import restaurantView from '../views/restaurant_view'
 
 class RestaurantController {
+  public async show(request: Request, response: Response): Promise<Response> {
+    const { restaurant_id } = request.params
+
+    const listRestaurant = container.resolve(ListRestaurantUseCases)
+
+    const restaurant = await listRestaurant.execute(restaurant_id)
+
+    return response.json(restaurantView.render(restaurant))
+  }
+
+  public async index(request: Request, response: Response): Promise<Response> {
+    return response.json()
+  }
+
   public async store(request: Request, response: Response): Promise<Response> {
     const {
       name,

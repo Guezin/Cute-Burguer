@@ -33,7 +33,7 @@ class Address {
   @Column()
   zipcode: string
 
-  @OneToOne(() => Restaurant)
+  @OneToOne(() => Restaurant, { eager: true })
   @JoinColumn({ name: 'restaurant_id' })
   restaurant_id: string
 

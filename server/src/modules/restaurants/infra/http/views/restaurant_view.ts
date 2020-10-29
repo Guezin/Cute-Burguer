@@ -45,7 +45,12 @@ export default {
         state: address.state,
         zipcode: address.zipcode
       },
-      images: restaurant.images
+      images: restaurant.images.map(image => {
+        return {
+          id: image.id,
+          path: image.path
+        }
+      })
     }
   }
 }

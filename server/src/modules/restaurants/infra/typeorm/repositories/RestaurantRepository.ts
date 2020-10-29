@@ -4,7 +4,8 @@ import Restaurant from '@modules/restaurants/infra/typeorm/entities/Restaurant'
 import Address from '../entities/Address'
 
 import IRestaurantRepository, {
-  ICreateRestaurantResponse
+  ICreateRestaurantResponse,
+  IListRestaurantResponse
 } from '@modules/restaurants/repositories/IRestaurantRepository'
 import ICreateRestaurantDTO from '@modules/restaurants/dtos/ICreateRestaurantDTO'
 
@@ -13,6 +14,30 @@ class RestaurantRepository implements IRestaurantRepository {
 
   constructor() {
     this.ormRepository = getRepository(Restaurant)
+  }
+
+  public async findById(
+    restaurant_id: string
+  ): Promise<IListRestaurantResponse> {
+    const restaurant = await this.ormRepository.findOne({
+      where: { id: restaurant_id }
+    })
+
+    const restaurantAddress = await this.ormRepository.manager
+      .getRepository(Address)
+      .findOne({
+        where: { restaurant_id }
+      })
+
+    return { restaurant, address: restaurantAddress }
+  }
+
+  public async listAll(): Promise<Address[]> {
+    const restaurants = await this.ormRepository.manager
+      .getRepository(Address)
+      .find()
+
+    return restaurants
   }
 
   public async create({

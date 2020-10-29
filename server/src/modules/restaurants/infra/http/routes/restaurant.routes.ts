@@ -17,6 +17,9 @@ class RestaurantRoutes {
   }
 
   main() {
+    this.routes.get('/:restaurant_id', RestaurantController.show)
+    this.routes.get('/', RestaurantController.index)
+
     this.routes.post(
       '/',
       this.upload.array('images'),

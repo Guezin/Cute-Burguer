@@ -34,7 +34,8 @@ class Restaurant {
   open_on_weekends: boolean
 
   @OneToMany(() => Image, image => image.restaurant, {
-    cascade: ['insert', 'update']
+    cascade: ['insert', 'update'],
+    eager: true
   })
   @JoinColumn({ name: 'restaurant_id' })
   images: Image[]

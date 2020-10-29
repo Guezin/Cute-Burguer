@@ -8,8 +8,15 @@ export interface ICreateRestaurantResponse {
   address: Address
 }
 
+export interface IListRestaurantResponse {
+  restaurant: Restaurant | undefined
+  address: Address | undefined
+}
+
 export default interface IRestaurantRepository {
   create: (
     restaurantData: ICreateRestaurantDTO
   ) => Promise<ICreateRestaurantResponse>
+  findById: (restaurant_id: string) => Promise<IListRestaurantResponse>
+  listAll: () => Promise<Address[]>
 }
