@@ -45,12 +45,6 @@ export class CreateAdresses1603482317432 implements MigrationInterface {
           },
 
           {
-            name: 'restaurant_id',
-            type: 'uuid',
-            isNullable: true
-          },
-
-          {
             name: 'created_at',
             type: 'timestamp',
             default: 'now()'
@@ -60,16 +54,6 @@ export class CreateAdresses1603482317432 implements MigrationInterface {
             name: 'updated_at',
             type: 'timestamp',
             default: 'now()'
-          }
-        ],
-        foreignKeys: [
-          {
-            name: 'AddressRestaurant',
-            columnNames: ['restaurant_id'],
-            referencedTableName: 'restaurants',
-            referencedColumnNames: ['id'],
-            onUpdate: 'CASCADE',
-            onDelete: 'CASCADE'
           }
         ]
       })

@@ -1,12 +1,6 @@
 import Restaurant from '@modules/restaurants/infra/typeorm/entities/Restaurant'
-import Address from '@modules/restaurants/infra/typeorm/entities/Address'
 
-interface IRenderProps {
-  restaurant: Restaurant
-  address: Address
-}
-
-interface IResponseRender {
+interface IResponse {
   restaurant_id: string
   name: string
   status: string
@@ -28,7 +22,7 @@ interface IResponseRender {
 }
 
 export default {
-  render({ restaurant, address }: IRenderProps): IResponseRender {
+  render(restaurant: Restaurant): IResponse {
     return {
       restaurant_id: restaurant.id,
       name: restaurant.name,
@@ -38,12 +32,12 @@ export default {
       opening_hours: restaurant.opening_hours,
       open_on_weekends: restaurant.open_on_weekends,
       address: {
-        street: address.street,
-        number: address.number,
-        neighborhood: address.neighborhood,
-        city: address.city,
-        state: address.state,
-        zipcode: address.zipcode
+        street: restaurant.address.street,
+        number: restaurant.address.number,
+        neighborhood: restaurant.address.neighborhood,
+        city: restaurant.address.city,
+        state: restaurant.address.state,
+        zipcode: restaurant.address.zipcode
       },
       images: restaurant.images.map(image => {
         return {
@@ -52,5 +46,32 @@ export default {
         }
       })
     }
+  },
+  renderMany(restaurants: Restaurant[]): IResponse[] {
+    return restaurants.map(restaurant => {
+      return {
+        restaurant_id: restaurant.id,
+        name: restaurant.name,
+        status: restaurant.status,
+        latitude: restaurant.latitude,
+        longitude: restaurant.longitude,
+        opening_hours: restaurant.opening_hours,
+        open_on_weekends: restaurant.open_on_weekends,
+        address: {
+          street: restaurant.address.street,
+          number: restaurant.address.number,
+          neighborhood: restaurant.address.neighborhood,
+          city: restaurant.address.city,
+          state: restaurant.address.state,
+          zipcode: restaurant.address.zipcode
+        },
+        images: restaurant.images.map(image => {
+          return {
+            id: image.id,
+            path: image.path
+          }
+        })
+      }
+    })
   }
 }

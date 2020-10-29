@@ -3,10 +3,7 @@ import { getRepository, Repository } from 'typeorm'
 import Restaurant from '@modules/restaurants/infra/typeorm/entities/Restaurant'
 import Address from '../entities/Address'
 
-import IRestaurantRepository, {
-  ICreateRestaurantResponse,
-  IListRestaurantResponse
-} from '@modules/restaurants/repositories/IRestaurantRepository'
+import IRestaurantRepository from '@modules/restaurants/repositories/IRestaurantRepository'
 import ICreateRestaurantDTO from '@modules/restaurants/dtos/ICreateRestaurantDTO'
 
 class RestaurantRepository implements IRestaurantRepository {
@@ -18,24 +15,18 @@ class RestaurantRepository implements IRestaurantRepository {
 
   public async findById(
     restaurant_id: string
-  ): Promise<IListRestaurantResponse> {
+  ): Promise<Restaurant | undefined> {
     const restaurant = await this.ormRepository.findOne({
       where: { id: restaurant_id }
     })
 
-    const restaurantAddress = await this.ormRepository.manager
-      .getRepository(Address)
-      .findOne({
-        where: { restaurant_id }
-      })
-
-    return { restaurant, address: restaurantAddress }
+    return restaurant
   }
 
-  public async listAll(): Promise<Address[]> {
-    const restaurants = await this.ormRepository.manager
-      .getRepository(Address)
-      .find()
+  public async listAllApproved(): Promise<Restaurant[]> {
+    const restaurants = await this.ormRepository.find({
+      where: { status: 'approved' }
+    })
 
     return restaurants
   }
@@ -48,18 +39,7 @@ class RestaurantRepository implements IRestaurantRepository {
     open_on_weekends,
     address,
     images
-  }: ICreateRestaurantDTO): Promise<ICreateRestaurantResponse> {
-    const restaurant = this.ormRepository.create({
-      name,
-      latitude,
-      longitude,
-      opening_hours,
-      open_on_weekends,
-      images
-    })
-
-    await this.ormRepository.save(restaurant)
-
+  }: ICreateRestaurantDTO): Promise<Restaurant> {
     const { street, number, neighborhood, city, state, zipcode } = address
     const _address = await this.ormRepository.manager
       .getRepository(Address)
@@ -69,14 +49,23 @@ class RestaurantRepository implements IRestaurantRepository {
         neighborhood,
         city,
         state,
-        zipcode,
-        restaurant_id: restaurant.id
+        zipcode
       })
 
-    return {
-      restaurant,
-      address: _address
-    }
+    const restaurant = this.ormRepository.create({
+      name,
+      latitude,
+      longitude,
+      opening_hours,
+      open_on_weekends,
+      address_id: _address.id,
+      address: _address,
+      images
+    })
+
+    await this.ormRepository.save(restaurant)
+
+    return restaurant
   }
 }
 

@@ -1,7 +1,7 @@
 import { inject, injectable } from 'tsyringe'
-import IRestaurantRepository, {
-  ICreateRestaurantResponse
-} from '@modules/restaurants/repositories/IRestaurantRepository'
+import IRestaurantRepository from '@modules/restaurants/repositories/IRestaurantRepository'
+
+import Restaurant from '../infra/typeorm/entities/Restaurant'
 
 interface IRequest {
   name: string
@@ -36,7 +36,7 @@ class CreateRestaurantUseCases {
     open_on_weekends,
     address,
     images
-  }: IRequest): Promise<ICreateRestaurantResponse> {
+  }: IRequest): Promise<Restaurant> {
     const restaurant = await this.restaurantRepository.create({
       name,
       latitude,

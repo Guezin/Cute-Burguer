@@ -14,9 +14,7 @@ export interface IListRestaurantResponse {
 }
 
 export default interface IRestaurantRepository {
-  create: (
-    restaurantData: ICreateRestaurantDTO
-  ) => Promise<ICreateRestaurantResponse>
-  findById: (restaurant_id: string) => Promise<IListRestaurantResponse>
-  listAll: () => Promise<Address[]>
+  create: (restaurantData: ICreateRestaurantDTO) => Promise<Restaurant>
+  findById: (restaurant_id: string) => Promise<Restaurant | undefined>
+  listAllApproved: () => Promise<Restaurant[]>
 }

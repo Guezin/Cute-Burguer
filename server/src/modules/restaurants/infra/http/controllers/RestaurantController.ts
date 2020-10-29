@@ -2,6 +2,7 @@ import { Request, Response } from 'express'
 import { container } from 'tsyringe'
 
 import ListRestaurantUseCases from '@modules/restaurants/useCases/ListRestaurantUseCases'
+import ListAllApprovedRestaurantUseCases from '@modules/restaurants/useCases/ListAllApprovedRestaurantsUseCases'
 import CreateRestaurantUseCases from '@modules/restaurants/useCases/CreateRestaurantUseCases'
 
 import restaurantView from '../views/restaurant_view'
@@ -18,7 +19,11 @@ class RestaurantController {
   }
 
   public async index(request: Request, response: Response): Promise<Response> {
-    return response.json()
+    const listAllApproved = container.resolve(ListAllApprovedRestaurantUseCases)
+
+    const restaurants = await listAllApproved.execute()
+
+    return response.json(restaurantView.renderMany(restaurants))
   }
 
   public async store(request: Request, response: Response): Promise<Response> {

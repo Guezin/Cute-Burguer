@@ -20,6 +20,13 @@ export class CreateRestaurants1603482285960 implements MigrationInterface {
           },
 
           {
+            name: 'status',
+            type: 'enum',
+            enum: ['pending', 'approved'],
+            default: "'pending'"
+          },
+
+          {
             name: 'latitude',
             type: 'numeric'
           },

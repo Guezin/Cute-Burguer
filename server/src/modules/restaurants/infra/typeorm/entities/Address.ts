@@ -2,13 +2,9 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  OneToOne,
-  JoinColumn,
   CreateDateColumn,
   UpdateDateColumn
 } from 'typeorm'
-
-import Restaurant from './Restaurant'
 
 @Entity('adresses')
 class Address {
@@ -32,10 +28,6 @@ class Address {
 
   @Column()
   zipcode: string
-
-  @OneToOne(() => Restaurant, { eager: true })
-  @JoinColumn({ name: 'restaurant_id' })
-  restaurant_id: string
 
   @CreateDateColumn()
   created_at: Date
