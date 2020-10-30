@@ -51,7 +51,7 @@ const RestaurantsMap: React.FC = () => {
             maxWidth={240}
           >
             <p>Trềs Irmãos</p>
-            <Link to="/">
+            <Link to="/restaurants">
               <FiArrowRight size={20} color="#fff" />
             </Link>
           </Popup>
