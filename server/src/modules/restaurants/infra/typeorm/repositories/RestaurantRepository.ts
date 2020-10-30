@@ -31,6 +31,14 @@ class RestaurantRepository implements IRestaurantRepository {
     return restaurants
   }
 
+  public async listAllPending(): Promise<Restaurant[]> {
+    const restaurants = await this.ormRepository.find({
+      where: { status: 'pending' }
+    })
+
+    return restaurants
+  }
+
   public async create({
     name,
     latitude,

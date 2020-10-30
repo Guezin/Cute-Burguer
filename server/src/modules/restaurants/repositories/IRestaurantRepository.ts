@@ -17,4 +17,5 @@ export default interface IRestaurantRepository {
   create: (restaurantData: ICreateRestaurantDTO) => Promise<Restaurant>
   findById: (restaurant_id: string) => Promise<Restaurant | undefined>
   listAllApproved: () => Promise<Restaurant[]>
+  listAllPending: () => Promise<Restaurant[]>
 }

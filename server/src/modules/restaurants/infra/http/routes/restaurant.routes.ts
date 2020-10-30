@@ -4,6 +4,8 @@ import multer, { Multer } from 'multer'
 import uploadonfig from '@config/upload'
 
 import RestaurantController from '../controllers/RestaurantController'
+import ApprovedRestaurantController from '../controllers/ApprovedRestaurantController'
+import PendingRestaurantController from '../controllers/PendingRestaurantController'
 
 class RestaurantRoutes {
   public readonly routes: IRouter
@@ -17,9 +19,10 @@ class RestaurantRoutes {
   }
 
   main() {
-    this.routes.get('/:restaurant_id', RestaurantController.show)
-    this.routes.get('/', RestaurantController.index)
+    this.routes.get('/approved', ApprovedRestaurantController.index)
+    this.routes.get('/pending', PendingRestaurantController.index)
 
+    this.routes.get('/:restaurant_id', RestaurantController.show)
     this.routes.post(
       '/',
       this.upload.array('images'),
