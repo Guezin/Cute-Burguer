@@ -26,6 +26,7 @@ class RestaurantRoutes {
       ensureAuthentication,
       PendingRestaurantController.index
     )
+    this.routes.post('/approve', ApprovedRestaurantController.store)
 
     this.routes.get(
       '/:restaurant_id',

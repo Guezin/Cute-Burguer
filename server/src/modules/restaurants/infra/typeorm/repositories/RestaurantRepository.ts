@@ -75,6 +75,12 @@ class RestaurantRepository implements IRestaurantRepository {
 
     return restaurant
   }
+
+  public async approve(restaurant: Restaurant): Promise<void> {
+    restaurant.status = 'approved'
+
+    await this.ormRepository.save(restaurant)
+  }
 }
 
 export default RestaurantRepository

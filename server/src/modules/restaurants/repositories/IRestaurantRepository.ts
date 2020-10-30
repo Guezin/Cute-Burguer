@@ -18,4 +18,5 @@ export default interface IRestaurantRepository {
   findById: (restaurant_id: string) => Promise<Restaurant | undefined>
   listAllApproved: () => Promise<Restaurant[]>
   listAllPending: () => Promise<Restaurant[]>
+  approve: (restaurant: Restaurant) => Promise<void>
 }

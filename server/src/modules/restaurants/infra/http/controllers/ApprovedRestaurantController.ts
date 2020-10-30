@@ -2,6 +2,7 @@ import { Request, Response } from 'express'
 import { container } from 'tsyringe'
 
 import ListAllApprovedRestaurantUseCases from '@modules/restaurants/useCases/ListAllApprovedRestaurantsUseCases'
+import ApproveRestaurantUseCases from '@modules/restaurants/useCases/ApproveRestaurantUseCases'
 
 import restaurantView from '../views/restaurant_view'
 
@@ -15,7 +16,13 @@ class ApprovedRestaurantController {
   }
 
   public async store(request: Request, response: Response): Promise<Response> {
-    return response.json({ ok: true })
+    const { restaurant_id } = request.body
+
+    const approveRestaurant = container.resolve(ApproveRestaurantUseCases)
+
+    await approveRestaurant.execute(restaurant_id)
+
+    return response.status(204).json()
   }
 }
 
