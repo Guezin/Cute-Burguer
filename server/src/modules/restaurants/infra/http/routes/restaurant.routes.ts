@@ -2,6 +2,7 @@ import { Router, IRouter } from 'express'
 import multer, { Multer } from 'multer'
 
 import uploadonfig from '@config/upload'
+import ensureAuthentication from '@shared/infra/http/middlewares/ensureAuthentication'
 
 import RestaurantController from '../controllers/RestaurantController'
 import ApprovedRestaurantController from '../controllers/ApprovedRestaurantController'
@@ -20,9 +21,17 @@ class RestaurantRoutes {
 
   main() {
     this.routes.get('/approved', ApprovedRestaurantController.index)
-    this.routes.get('/pending', PendingRestaurantController.index)
+    this.routes.get(
+      '/pending',
+      ensureAuthentication,
+      PendingRestaurantController.index
+    )
 
-    this.routes.get('/:restaurant_id', RestaurantController.show)
+    this.routes.get(
+      '/:restaurant_id',
+      ensureAuthentication,
+      RestaurantController.show
+    )
     this.routes.post(
       '/',
       this.upload.array('images'),
