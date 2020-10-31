@@ -29,6 +29,7 @@ export default createGlobalStyle`
     --color-buttonPrimary: #FF6400;
     --color-textButtonPrimary: #FFF;
     --color-buttonPrimaryHover: #F23132;
+    --color-buttonPrimaryHoverSecondary: #E5681F;
     --color-textButtonPrimaryHover: #A32121;
     --color-buttonSecondary: #FFD312;
     --color-textButtonSecondary: #8D774B;
@@ -52,5 +53,9 @@ export default createGlobalStyle`
     --color-textOpenOnWeekends: #37c77f;
     --color-background-dontOpenOnWeekends: linear-gradient(154.16deg, #fdf0f5 7.85%, #ffffff 91.03%);
     --color-textDontOpenOnWeekends: #ff669f;
+    --color-background-form: #FFF;
+    --color-border-form: #d3e2e5;
+    --color-text-label: #8FA7B2;
+    --color-background-input: #f5f8fa;
   }
 `

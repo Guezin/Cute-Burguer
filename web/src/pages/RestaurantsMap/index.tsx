@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { FiArrowRight, FiPlus } from 'react-icons/fi'
 import Leaflet from 'leaflet'
 
@@ -10,6 +10,12 @@ import mapMarkerImg from '../../images/marker.png'
 import { Container, CreateRestaurantButton } from './styles'
 
 const RestaurantsMap: React.FC = () => {
+  const history = useHistory()
+
+  const handleNavigateToCreateRestaurantScreen = useCallback(() => {
+    history.push('/restaurants/create')
+  }, [history])
+
   return (
     <Container>
       <aside>
@@ -58,7 +64,7 @@ const RestaurantsMap: React.FC = () => {
         </Marker>
       </Map>
 
-      <CreateRestaurantButton>
+      <CreateRestaurantButton onClick={handleNavigateToCreateRestaurantScreen}>
         <FiPlus size={32} color="#fff" />
       </CreateRestaurantButton>
     </Container>

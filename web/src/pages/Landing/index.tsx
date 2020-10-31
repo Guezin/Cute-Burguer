@@ -8,11 +8,11 @@ import ilustraLandingImg from '../../images/ilustra-landing.png'
 import { Container, Content, Location, TitleContainer } from './styles'
 
 const Landing: React.FC = () => {
-  const navigation = useHistory()
+  const history = useHistory()
 
   const handleNavigateToRestaurantsMapScreen = useCallback(() => {
-    navigation.push('/restaurants-map')
-  }, [navigation])
+    history.push('/restaurants-map')
+  }, [history])
 
   return (
     <Container>
