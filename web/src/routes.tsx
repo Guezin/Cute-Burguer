@@ -5,6 +5,7 @@ import LandingScreen from './pages/Landing'
 import RestaurantsMapScreen from './pages/RestaurantsMap'
 import RestaurantScreen from './pages/Restaurant'
 import CreateRestaurantScreen from './pages/CreateRestaurant'
+import DoneScreen from './pages/Done'
 
 const Routes: React.FC = () => {
   return (
@@ -15,6 +16,8 @@ const Routes: React.FC = () => {
         <Route path="/restaurants-map" component={RestaurantsMapScreen} />
         <Route path="/restaurants" exact component={RestaurantScreen} />
         <Route path="/restaurants/create" component={CreateRestaurantScreen} />
+
+        <Route path="/done" component={DoneScreen} />
       </Switch>
     </BrowserRouter>
   )

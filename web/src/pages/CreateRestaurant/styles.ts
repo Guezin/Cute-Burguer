@@ -115,6 +115,13 @@ export const ImagesContainer = styled.div`
   grid-template-columns: repeat(5, 1fr);
   grid-gap: 16px;
 
+  img {
+    width: 100%;
+    height: 96px;
+    object-fit: cover;
+    border-radius: 20px;
+  }
+
   label {
     height: 96px;
     background: var(--color-background-input);

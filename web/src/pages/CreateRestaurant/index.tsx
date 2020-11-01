@@ -1,4 +1,5 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, ChangeEvent } from 'react'
+import { useHistory } from 'react-router-dom'
 import { Map, Marker, TileLayer } from 'react-leaflet'
 import Leaflet, { LeafletMouseEvent } from 'leaflet'
 import { FiPlus } from 'react-icons/fi'
@@ -16,6 +17,10 @@ import {
 
 const CreateRestaurant: React.FC = () => {
   const [position, setPosition] = useState({ latitude: 0, longitude: 0 })
+  const [openOnWeekends, setOpenOnWeekends] = useState(0)
+  const [previewImages, setPreviewImages] = useState<string[]>([])
+
+  const history = useHistory()
 
   const handleMapClick = useCallback((envet: LeafletMouseEvent) => {
     const { lat, lng } = envet.latlng
@@ -26,12 +31,33 @@ const CreateRestaurant: React.FC = () => {
     })
   }, [])
 
+  const handleSelectImage = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      if (!event.target.files) {
+        return
+      }
+
+      const selectedImages = Array.from(event.target.files)
+
+      const selectedImagesPreview = selectedImages.map(image => {
+        return URL.createObjectURL(image)
+      })
+
+      setPreviewImages(selectedImagesPreview)
+    },
+    []
+  )
+
+  const handleSubmit = useCallback(() => {
+    history.push('/done')
+  }, [history])
+
   return (
     <Container>
       <Sidebar />
 
       <main>
-        <form>
+        <form onSubmit={handleSubmit}>
           <fieldset>
             <legend>Dados</legend>
 
@@ -70,9 +96,18 @@ const CreateRestaurant: React.FC = () => {
             </InputBlock>
 
             <InputBlock>
+              <label htmlFor="whatsapp_phone">Número Whatsapp</label>
+              <input id="whatsapp_phone" type="text" onChange={() => {}} />
+            </InputBlock>
+
+            <InputBlock>
               <label htmlFor="images">Fotos</label>
 
               <ImagesContainer>
+                {previewImages.map(image => {
+                  return <img key={image} src={image} alt="" />
+                })}
+
                 <label htmlFor="image-array">
                   <FiPlus size={24} color="#15b6d6" />
                 </label>
@@ -80,7 +115,7 @@ const CreateRestaurant: React.FC = () => {
                   id="image-array"
                   type="file"
                   multiple
-                  onChange={() => {}}
+                  onChange={handleSelectImage}
                 />
               </ImagesContainer>
             </InputBlock>
@@ -102,11 +137,11 @@ const CreateRestaurant: React.FC = () => {
             <InputBlock>
               <label htmlFor="open_on_weekends">Atende fim de semana</label>
 
-              <ButtonSelectContainer activeButton={1}>
-                <button type="button" onClick={() => {}}>
+              <ButtonSelectContainer activeButton={openOnWeekends}>
+                <button type="button" onClick={() => setOpenOnWeekends(1)}>
                   Sim
                 </button>
-                <button type="button" onClick={() => {}}>
+                <button type="button" onClick={() => setOpenOnWeekends(2)}>
                   Não
                 </button>
               </ButtonSelectContainer>

@@ -26,6 +26,7 @@ export default createGlobalStyle`
   :root {
     --color-background: #EBF2F5;
     --color-landingPage: linear-gradient(107.97deg, #9C3F3A 0%, #B32728 100%);
+    --color-donePage: #F56D22;
     --color-buttonPrimary: #FF6400;
     --color-textButtonPrimary: #FFF;
     --color-buttonPrimaryHover: #F23132;
@@ -37,6 +38,9 @@ export default createGlobalStyle`
     --color-textButtonSecondaryHover: #A32121;
     --color-buttonTertiary: #B32728;
     --color-buttonTertiaryHover: #F23132;
+    --color-buttonQuarterly: #D6601D;
+    --color-textButtonQuarterly: #FFF;
+    --color-buttonQuarterlyHover: #E5681F;
     --color-textSecondary: #FFF;
     --color-background-aside: linear-gradient(329.54deg, #B32728 0%, #9C3F3A 100%);
     --color-background-sidebar: #9C3F3A;
