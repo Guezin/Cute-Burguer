@@ -1,20 +1,39 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet'
 import { Link, useHistory } from 'react-router-dom'
 import { FiArrowRight, FiPlus } from 'react-icons/fi'
 import Leaflet from 'leaflet'
+
+import api from '../../services/api'
 
 import logoImg from '../../images/logo.png'
 import mapMarkerImg from '../../images/marker.png'
 
 import { Container, CreateRestaurantButton } from './styles'
 
+interface IRestaurant {
+  restaurant_id: string
+  name: string
+  latitude: number
+  longitude: number
+}
+
 const RestaurantsMap: React.FC = () => {
+  const [restaurants, setRestaurants] = useState<IRestaurant[]>([])
+
   const history = useHistory()
 
   const handleNavigateToCreateRestaurantScreen = useCallback(() => {
     history.push('/restaurants/create')
   }, [history])
+
+  useEffect(() => {
+    ;(async () => {
+      const { data } = await api.get('/restaurants/approved')
+
+      setRestaurants(data)
+    })()
+  }, [])
 
   return (
     <Container>
@@ -41,27 +60,30 @@ const RestaurantsMap: React.FC = () => {
           url={`https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`}
         />
 
-        <Marker
-          position={[-23.4516163, -46.7279187]}
-          icon={Leaflet.icon({
-            iconUrl: mapMarkerImg,
-            iconSize: [48, 48],
-            iconAnchor: [34, 56],
-            popupAnchor: [-9, -60]
-          })}
-        >
-          <Popup
-            className="map-popup"
-            closeButton={false}
-            minWidth={240}
-            maxWidth={240}
+        {restaurants.map(restaurant => (
+          <Marker
+            key={restaurant.restaurant_id}
+            position={[restaurant.latitude, restaurant.longitude]}
+            icon={Leaflet.icon({
+              iconUrl: mapMarkerImg,
+              iconSize: [48, 48],
+              iconAnchor: [34, 56],
+              popupAnchor: [-9, -60]
+            })}
           >
-            <p>Trềs Irmãos</p>
-            <Link to="/restaurants">
-              <FiArrowRight size={20} color="#fff" />
-            </Link>
-          </Popup>
-        </Marker>
+            <Popup
+              className="map-popup"
+              closeButton={false}
+              minWidth={240}
+              maxWidth={240}
+            >
+              <p>{restaurant.name}</p>
+              <Link to="/restaurants">
+                <FiArrowRight size={20} color="#fff" />
+              </Link>
+            </Popup>
+          </Marker>
+        ))}
       </Map>
 
       <CreateRestaurantButton onClick={handleNavigateToCreateRestaurantScreen}>

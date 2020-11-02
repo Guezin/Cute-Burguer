@@ -107,15 +107,15 @@ const CreateRestaurant: React.FC = () => {
       data.append('opening_hours', opening_hours)
       data.append('open_on_weekends', String(!!openOnWeekends))
 
-      images.map(image => data.append('images', image.name))
+      images.map(image => data.append('images', image))
 
       try {
         await api.post('/restaurants', data)
+
+        history.push('/done')
       } catch {
         alert('Houve algum erro ao cadastrar!')
       }
-
-      history.push('/done')
     },
     [images, openOnWeekends, position, history]
   )
