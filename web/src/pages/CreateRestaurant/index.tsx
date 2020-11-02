@@ -6,6 +6,8 @@ import { FiPlus } from 'react-icons/fi'
 import { Form } from '@unform/web'
 import { FormHandles } from '@unform/core'
 
+import api from '../../services/api'
+
 import mapMarkerImg from '../../images/marker.png'
 
 import Sidebar from '../../components/Sidebar'
@@ -19,16 +21,31 @@ import {
   ButtonSelectContainer
 } from './styles'
 
+interface IFormSubmitData {
+  name: string
+  about: string
+  whatsapp_phone: string
+  street: string
+  number: string
+  neighborhood: string
+  city: string
+  state: string
+  zipcode: string
+  instructions: string
+  opening_hours: string
+}
+
 const CreateRestaurant: React.FC = () => {
   const [position, setPosition] = useState({ latitude: 0, longitude: 0 })
   const [openOnWeekends, setOpenOnWeekends] = useState(0)
   const [previewImages, setPreviewImages] = useState<string[]>([])
+  const [images, setImages] = useState<File[]>([])
 
   const formRef = useRef<FormHandles>(null)
   const history = useHistory()
 
-  const handleMapClick = useCallback((envet: LeafletMouseEvent) => {
-    const { lat, lng } = envet.latlng
+  const handleMapClick = useCallback((event: LeafletMouseEvent) => {
+    const { lat, lng } = event.latlng
 
     setPosition({
       latitude: lat,
@@ -44,23 +61,63 @@ const CreateRestaurant: React.FC = () => {
 
       const selectedImages = Array.from(event.target.files)
 
+      setImages(selectedImages)
+
       const selectedImagesPreview = selectedImages.map(image => {
         return URL.createObjectURL(image)
       })
 
       setPreviewImages(selectedImagesPreview)
-
-      return selectedImages
     },
     []
   )
 
   const handleSubmit = useCallback(
-    data => {
-      console.log(data)
-      // history.push('/done')
+    async ({
+      name,
+      about,
+      whatsapp_phone,
+      street,
+      number,
+      neighborhood,
+      city,
+      state,
+      zipcode,
+      instructions,
+      opening_hours
+    }: IFormSubmitData) => {
+      const data = new FormData()
+
+      const address = {
+        street,
+        number,
+        neighborhood,
+        city,
+        state,
+        zipcode
+      }
+
+      data.append('name', name)
+      data.append('about', about)
+      data.append('latitude', String(position.latitude))
+      data.append('longitude', String(position.longitude))
+      data.append('whatsapp_phone', whatsapp_phone)
+      data.append('address', JSON.stringify(address))
+      data.append('instructions', instructions)
+      data.append('opening_hours', opening_hours)
+      data.append('open_on_weekends', String(!!openOnWeekends))
+
+      images.map(image => data.append('images', image.name))
+
+      try {
+        await api.post('/restaurants', data)
+      } catch {
+        alert('Houve algum erro ao cadastrar!')
+      }
+
+      history.push('/done')
     },
-    [history]
+    [images, openOnWeekends, position, history]
   )
 
   return (
@@ -75,7 +132,7 @@ const CreateRestaurant: React.FC = () => {
             <Map
               center={[-23.4516163, -46.7279187]}
               zoom={15}
-              style={{ width: '100%', height: '100%' }}
+              style={{ width: '100%', height: 280 }}
               onclick={handleMapClick}
             >
               <TileLayer
@@ -84,7 +141,8 @@ const CreateRestaurant: React.FC = () => {
 
               {position.latitude !== 0 && (
                 <Marker
-                  position={[-23.4516163, -46.7279187]}
+                  interactive={false}
+                  position={[position.latitude, position.longitude]}
                   icon={Leaflet.icon({
                     iconUrl: mapMarkerImg,
                     iconSize: [48, 48],
@@ -119,6 +177,17 @@ const CreateRestaurant: React.FC = () => {
                 />
               </ImagesContainer>
             </InputBlock>
+          </fieldset>
+
+          <fieldset>
+            <legend>Endereço</legend>
+
+            <Input name="street" label="Rua" />
+            <Input name="number" label="Número" />
+            <Input name="neighborhood" label="Bairro" />
+            <Input name="city" label="Cidade" />
+            <Input name="state" label="Estado" />
+            <Input name="zipcode" label="CEP" />
           </fieldset>
 
           <fieldset>

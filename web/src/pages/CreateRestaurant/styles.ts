@@ -38,12 +38,6 @@ export const Container = styled.div`
         margin-top: 80px;
       }
 
-      .leaflet-container {
-        margin-bottom: 40px;
-        border: 1px solid var(--color-border-form);
-        border-radius: 20px;
-      }
-
       > button {
         width: 100%;
         height: 64px;
@@ -63,6 +57,11 @@ export const Container = styled.div`
           background: var(--color-buttonPrimaryHoverSecondary);
         }
       }
+    }
+    .leaflet-container {
+      margin-bottom: 40px;
+      border: 1px solid #d3e2e5;
+      border-radius: 20px;
     }
   }
 `

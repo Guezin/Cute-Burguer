@@ -24,7 +24,7 @@ const Input: React.FC<InputProps> = ({ label, name, ...rest }) => {
     <Container>
       <label htmlFor={name}>{label}</label>
 
-      <input id={name} ref={inputRef} {...rest} />
+      <input id={name} ref={inputRef} defaultValue={defaultValue} {...rest} />
     </Container>
   )
 }
