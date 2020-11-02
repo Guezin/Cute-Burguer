@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import { Map, Marker, TileLayer } from 'react-leaflet'
 import Leaflet from 'leaflet'
 import { FiClock, FiInfo } from 'react-icons/fi'
 import { FaWhatsapp } from 'react-icons/fa'
+
+import api from '../../services/api'
 
 import Sidebar from '../../components/Sidebar'
 import mapMarkerImg from '../../images/marker.png'
@@ -19,7 +22,40 @@ import {
   DontOpenOnWeekends
 } from './styles'
 
+interface IRouteParamsProps {
+  restaurant_id: string
+}
+
+interface IRestaurant {
+  name: string
+  about: string
+  latitude: number
+  longitude: number
+  instructions: string
+  opening_hours: string
+  open_on_weekends: boolean
+  images: Array<{
+    id: string
+    url: string
+  }>
+}
+
 const Restaurant: React.FC = () => {
+  const [restaurant, setRestaurant] = useState<IRestaurant>()
+  const [activeImageIndex, setActiveImageIndex] = useState(0)
+
+  const { restaurant_id } = useParams<IRouteParamsProps>()
+
+  useEffect(() => {
+    api
+      .get(`/restaurants/${restaurant_id}`)
+      .then(response => setRestaurant(response.data))
+  }, [restaurant_id])
+
+  if (!restaurant) {
+    return <p>Carregando...</p>
+  }
+
   return (
     <Container>
       <Sidebar />
@@ -27,40 +63,30 @@ const Restaurant: React.FC = () => {
       <main>
         <RestaurantDatails>
           <img
-            src="https://i.pinimg.com/originals/40/89/a5/4089a577fc40aed4e89ba5430fd066bd.jpg"
-            alt=""
+            src={restaurant.images[activeImageIndex].url}
+            alt={restaurant.name}
           />
 
           <RestaurantImages>
-            <button type="button">
-              <img
-                src="https://i.pinimg.com/originals/40/89/a5/4089a577fc40aed4e89ba5430fd066bd.jpg"
-                alt=""
-              />
-            </button>
-
-            <button type="button">
-              <img
-                src="https://i.pinimg.com/originals/40/89/a5/4089a577fc40aed4e89ba5430fd066bd.jpg"
-                alt=""
-              />
-            </button>
-
-            <button type="button">
-              <img
-                src="https://i.pinimg.com/originals/40/89/a5/4089a577fc40aed4e89ba5430fd066bd.jpg"
-                alt=""
-              />
-            </button>
+            {restaurant.images.map((image, index) => {
+              return (
+                <button
+                  type="button"
+                  onClick={() => setActiveImageIndex(index)}
+                >
+                  <img src={image.url} alt={restaurant.name} />
+                </button>
+              )
+            })}
           </RestaurantImages>
 
           <Content>
-            <h1>Três Irmãos</h1>
-            <p>Toda comida aqui é muito boa, sempre fazemos com amor!</p>
+            <h1>{restaurant.name}</h1>
+            <p>{restaurant.about}</p>
 
             <MapContainer>
               <Map
-                center={[-23.4516163, -46.7279187]}
+                center={[restaurant.latitude, restaurant.longitude]}
                 zoom={16}
                 style={{ width: '100%', height: 280 }}
                 dragging={false}
@@ -81,7 +107,7 @@ const Restaurant: React.FC = () => {
                     iconAnchor: [34, 56],
                     popupAnchor: [-9, -60]
                   })}
-                  position={[-23.4516163, -46.7279187]}
+                  position={[restaurant.latitude, restaurant.longitude]}
                 />
               </Map>
 
@@ -89,7 +115,7 @@ const Restaurant: React.FC = () => {
                 <a
                   target="_blank"
                   rel="noopener noreferrer"
-                  href={`https://www.google.com/maps/dir/?api=1&destination=-23.4516163,-46.7279187`}
+                  href={`https://www.google.com/maps/dir/?api=1&destination=${restaurant.latitude},${restaurant.longitude}`}
                 >
                   Ver rotas no Google Maps
                 </a>
@@ -99,19 +125,16 @@ const Restaurant: React.FC = () => {
             <hr />
 
             <h2>Instruções para visita</h2>
-            <p>
-              Venha como se sentir a vontade e traga muito fome para se
-              alimentar bem.
-            </p>
+            <p>{restaurant.instructions}</p>
 
             <OpenDetails>
               <OpeningHours>
                 <FiClock size={32} color="#15B6D6" />
                 Segunda à Sexta <br />
-                08h até 18h
+                {restaurant.opening_hours}
               </OpeningHours>
 
-              {1 === 1 ? (
+              {restaurant.open_on_weekends ? (
                 <OpenOnWeekends>
                   <FiInfo size={32} color="#39CC83" />
                   Atendemos <br />

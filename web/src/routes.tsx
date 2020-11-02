@@ -14,7 +14,11 @@ const Routes: React.FC = () => {
         <Route path="/" exact component={LandingScreen} />
 
         <Route path="/restaurants-map" component={RestaurantsMapScreen} />
-        <Route path="/restaurants" exact component={RestaurantScreen} />
+        <Route
+          path="/restaurants/:restaurant_id"
+          exact
+          component={RestaurantScreen}
+        />
         <Route path="/restaurants/create" component={CreateRestaurantScreen} />
 
         <Route path="/done" component={DoneScreen} />
