@@ -27,6 +27,21 @@ export class CreateRestaurants1603482285960 implements MigrationInterface {
           },
 
           {
+            name: 'about',
+            type: 'varchar'
+          },
+
+          {
+            name: 'instructions',
+            type: 'varchar'
+          },
+
+          {
+            name: 'whatsapp_phone',
+            type: 'varchar'
+          },
+
+          {
             name: 'latitude',
             type: 'numeric'
           },
