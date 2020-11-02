@@ -3,9 +3,12 @@ import Restaurant from '@modules/restaurants/infra/typeorm/entities/Restaurant'
 interface IResponse {
   restaurant_id: string
   name: string
+  about: string
   status: string
   latitude: number
   longitude: number
+  whatsapp_phone: string
+  instructions: string
   opening_hours: string
   open_on_weekends: boolean
   address: {
@@ -26,9 +29,12 @@ export default {
     return {
       restaurant_id: restaurant.id,
       name: restaurant.name,
+      about: restaurant.about,
       status: restaurant.status,
       latitude: Number(restaurant.latitude),
       longitude: Number(restaurant.longitude),
+      whatsapp_phone: restaurant.whatsapp_phone,
+      instructions: restaurant.instructions,
       opening_hours: restaurant.opening_hours,
       open_on_weekends: restaurant.open_on_weekends,
       address: {
@@ -52,9 +58,12 @@ export default {
       return {
         restaurant_id: restaurant.id,
         name: restaurant.name,
+        about: restaurant.about,
         status: restaurant.status,
         latitude: Number(restaurant.latitude),
         longitude: Number(restaurant.longitude),
+        whatsapp_phone: restaurant.whatsapp_phone,
+        instructions: restaurant.instructions,
         opening_hours: restaurant.opening_hours,
         open_on_weekends: restaurant.open_on_weekends,
         address: {

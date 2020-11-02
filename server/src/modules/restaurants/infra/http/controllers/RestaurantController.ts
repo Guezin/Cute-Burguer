@@ -20,11 +20,14 @@ class RestaurantController {
   public async store(request: Request, response: Response): Promise<Response> {
     const {
       name,
+      about,
       latitude,
       longitude,
+      whatsapp_phone,
+      address,
+      instructions,
       opening_hours,
-      open_on_weekends,
-      address
+      open_on_weekends
     } = request.body
 
     const requestImages = request.files as Express.Multer.File[]
@@ -37,11 +40,14 @@ class RestaurantController {
 
     const data = {
       name,
+      about,
       latitude,
       longitude,
+      whatsapp_phone,
+      address: JSON.parse(address),
+      instructions,
       opening_hours,
       open_on_weekends: open_on_weekends === 'true',
-      address: JSON.parse(address),
       images
     }
 

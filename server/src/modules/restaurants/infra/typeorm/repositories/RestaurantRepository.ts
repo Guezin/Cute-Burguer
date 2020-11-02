@@ -41,8 +41,11 @@ class RestaurantRepository implements IRestaurantRepository {
 
   public async create({
     name,
+    about,
     latitude,
     longitude,
+    whatsapp_phone,
+    instructions,
     opening_hours,
     open_on_weekends,
     address,
@@ -62,8 +65,11 @@ class RestaurantRepository implements IRestaurantRepository {
 
     const restaurant = this.ormRepository.create({
       name,
+      about,
       latitude,
       longitude,
+      whatsapp_phone,
+      instructions,
       opening_hours,
       open_on_weekends,
       address_id: _address.id,

@@ -5,8 +5,11 @@ import Restaurant from '../infra/typeorm/entities/Restaurant'
 
 interface IRequest {
   name: string
+  about: string
   latitude: number
   longitude: number
+  whatsapp_phone: string
+  instructions: string
   opening_hours: string
   open_on_weekends: boolean
   address: {
@@ -30,8 +33,11 @@ class CreateRestaurantUseCases {
 
   public async execute({
     name,
+    about,
     latitude,
     longitude,
+    whatsapp_phone,
+    instructions,
     opening_hours,
     open_on_weekends,
     address,
@@ -39,8 +45,11 @@ class CreateRestaurantUseCases {
   }: IRequest): Promise<Restaurant> {
     const restaurant = await this.restaurantRepository.create({
       name,
+      about,
       latitude,
       longitude,
+      whatsapp_phone,
+      instructions,
       opening_hours,
       open_on_weekends,
       address,

@@ -20,6 +20,9 @@ class Restaurant {
   @Column()
   name: string
 
+  @Column()
+  about: string
+
   @Column({ default: 'pending' })
   status: 'pending' | 'approved'
 
@@ -28,6 +31,12 @@ class Restaurant {
 
   @Column('numeric', { precision: 2, scale: 10 })
   longitude: number
+
+  @Column()
+  whatsapp_phone: string
+
+  @Column()
+  instructions: string
 
   @Column()
   opening_hours: string
