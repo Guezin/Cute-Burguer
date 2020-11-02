@@ -2,7 +2,6 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  OneToOne,
   OneToMany,
   JoinColumn,
   CreateDateColumn,
@@ -10,7 +9,6 @@ import {
 } from 'typeorm'
 
 import Image from './Image'
-import Address from './Address'
 
 @Entity('restaurants')
 class Restaurant {
@@ -50,13 +48,6 @@ class Restaurant {
   })
   @JoinColumn({ name: 'restaurant_id' })
   images: Image[]
-
-  @Column()
-  address_id: string
-
-  @OneToOne(() => Address, { eager: true })
-  @JoinColumn({ name: 'address_id' })
-  address: Address
 
   @CreateDateColumn()
   created_at: Date

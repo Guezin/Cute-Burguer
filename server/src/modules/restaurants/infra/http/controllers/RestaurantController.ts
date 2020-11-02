@@ -24,7 +24,6 @@ class RestaurantController {
       latitude,
       longitude,
       whatsapp_phone,
-      address,
       instructions,
       opening_hours,
       open_on_weekends
@@ -44,7 +43,6 @@ class RestaurantController {
       latitude,
       longitude,
       whatsapp_phone,
-      address: JSON.parse(address),
       instructions,
       opening_hours,
       open_on_weekends: open_on_weekends === 'true',

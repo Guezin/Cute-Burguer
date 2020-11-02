@@ -1,7 +1,6 @@
 import { getRepository, Repository } from 'typeorm'
 
 import Restaurant from '@modules/restaurants/infra/typeorm/entities/Restaurant'
-import Address from '../entities/Address'
 
 import IRestaurantRepository from '@modules/restaurants/repositories/IRestaurantRepository'
 import ICreateRestaurantDTO from '@modules/restaurants/dtos/ICreateRestaurantDTO'
@@ -48,21 +47,8 @@ class RestaurantRepository implements IRestaurantRepository {
     instructions,
     opening_hours,
     open_on_weekends,
-    address,
     images
   }: ICreateRestaurantDTO): Promise<Restaurant> {
-    const { street, number, neighborhood, city, state, zipcode } = address
-    const _address = await this.ormRepository.manager
-      .getRepository(Address)
-      .save({
-        street,
-        number,
-        neighborhood,
-        city,
-        state,
-        zipcode
-      })
-
     const restaurant = this.ormRepository.create({
       name,
       about,
@@ -72,8 +58,6 @@ class RestaurantRepository implements IRestaurantRepository {
       instructions,
       opening_hours,
       open_on_weekends,
-      address_id: _address.id,
-      address: _address,
       images
     })
 

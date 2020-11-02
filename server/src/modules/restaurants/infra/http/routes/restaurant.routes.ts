@@ -28,11 +28,7 @@ class RestaurantRoutes {
     )
     this.routes.post('/approve', ApprovedRestaurantController.store)
 
-    this.routes.get(
-      '/:restaurant_id',
-      ensureAuthentication,
-      RestaurantController.show
-    )
+    this.routes.get('/:restaurant_id', RestaurantController.show)
     this.routes.post(
       '/',
       this.upload.array('images'),

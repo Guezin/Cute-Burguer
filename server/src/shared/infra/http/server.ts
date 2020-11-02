@@ -2,6 +2,7 @@ import 'reflect-metadata'
 import 'dotenv/config'
 import express, { Express, json } from 'express'
 import cors from 'cors'
+import { resolve } from 'path'
 import 'express-async-errors'
 
 import '../typeorm/database/connection'
@@ -22,6 +23,10 @@ class Server {
   }
 
   middlewares() {
+    this.server.use(
+      '/files',
+      express.static(resolve(__dirname, '..', '..', '..', '..', 'uploads'))
+    )
     this.server.use(json())
     this.server.use(cors())
   }

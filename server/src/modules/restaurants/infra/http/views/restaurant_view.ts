@@ -11,16 +11,9 @@ interface IResponse {
   instructions: string
   opening_hours: string
   open_on_weekends: boolean
-  address: {
-    street: string
-    number: number
-    neighborhood: string
-    city: string
-    state: string
-    zipcode: string
-  }
   images: Array<{
-    path: string
+    id: string
+    url: string
   }>
 }
 
@@ -37,18 +30,10 @@ export default {
       instructions: restaurant.instructions,
       opening_hours: restaurant.opening_hours,
       open_on_weekends: restaurant.open_on_weekends,
-      address: {
-        street: restaurant.address.street,
-        number: Number(restaurant.address.number),
-        neighborhood: restaurant.address.neighborhood,
-        city: restaurant.address.city,
-        state: restaurant.address.state,
-        zipcode: restaurant.address.zipcode
-      },
       images: restaurant.images.map(image => {
         return {
           id: image.id,
-          path: image.path
+          url: `${process.env.APP_API_URL}/files/${image.path}`
         }
       })
     }
@@ -66,18 +51,10 @@ export default {
         instructions: restaurant.instructions,
         opening_hours: restaurant.opening_hours,
         open_on_weekends: restaurant.open_on_weekends,
-        address: {
-          street: restaurant.address.street,
-          number: Number(restaurant.address.number),
-          neighborhood: restaurant.address.neighborhood,
-          city: restaurant.address.city,
-          state: restaurant.address.state,
-          zipcode: restaurant.address.zipcode
-        },
         images: restaurant.images.map(image => {
           return {
             id: image.id,
-            path: image.path
+            url: `${process.env.APP_API_URL}/files/${image.path}`
           }
         })
       }
