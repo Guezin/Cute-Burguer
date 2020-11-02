@@ -44,7 +44,7 @@ export const Container = styled.div`
         border-radius: 20px;
       }
 
-      button[type='submit'] {
+      > button {
         width: 100%;
         height: 64px;
         margin-top: 64px;
@@ -77,36 +77,6 @@ export const InputBlock = styled.div`
     color: var(--color-text-label);
     margin-bottom: 8px;
     line-height: 24px;
-
-    span {
-      font-size: 14px;
-      color: var(--color-text-label);
-      margin-left: 24px;
-      line-height: 24px;
-    }
-  }
-
-  input,
-  textarea {
-    width: 100%;
-    background: var(--color-background-input);
-    border: 1px solid var(--color-border-form);
-    border-radius: 20px;
-    outline: none;
-    color: var(--color-textPrimary);
-  }
-
-  input {
-    height: 64px;
-    padding: 0 16px;
-  }
-
-  textarea {
-    min-height: 120px;
-    max-height: 240px;
-    resize: vertical;
-    padding: 16px;
-    line-height: 28px;
   }
 `
 

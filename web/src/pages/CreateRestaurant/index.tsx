@@ -1,12 +1,16 @@
-import React, { useState, useCallback, ChangeEvent } from 'react'
+import React, { useState, useCallback, ChangeEvent, useRef } from 'react'
 import { useHistory } from 'react-router-dom'
 import { Map, Marker, TileLayer } from 'react-leaflet'
 import Leaflet, { LeafletMouseEvent } from 'leaflet'
 import { FiPlus } from 'react-icons/fi'
+import { Form } from '@unform/web'
+import { FormHandles } from '@unform/core'
 
 import mapMarkerImg from '../../images/marker.png'
 
 import Sidebar from '../../components/Sidebar'
+import Input from '../../components/Input'
+import Textarea from '../../components/Textarea'
 
 import {
   Container,
@@ -20,6 +24,7 @@ const CreateRestaurant: React.FC = () => {
   const [openOnWeekends, setOpenOnWeekends] = useState(0)
   const [previewImages, setPreviewImages] = useState<string[]>([])
 
+  const formRef = useRef<FormHandles>(null)
   const history = useHistory()
 
   const handleMapClick = useCallback((envet: LeafletMouseEvent) => {
@@ -44,20 +49,26 @@ const CreateRestaurant: React.FC = () => {
       })
 
       setPreviewImages(selectedImagesPreview)
+
+      return selectedImages
     },
     []
   )
 
-  const handleSubmit = useCallback(() => {
-    history.push('/done')
-  }, [history])
+  const handleSubmit = useCallback(
+    data => {
+      console.log(data)
+      // history.push('/done')
+    },
+    [history]
+  )
 
   return (
     <Container>
       <Sidebar />
 
       <main>
-        <form onSubmit={handleSubmit}>
+        <Form ref={formRef} onSubmit={handleSubmit}>
           <fieldset>
             <legend>Dados</legend>
 
@@ -83,22 +94,11 @@ const CreateRestaurant: React.FC = () => {
               )}
             </Map>
 
-            <InputBlock>
-              <label htmlFor="name">Nome</label>
-              <input id="name" type="text" onChange={() => {}} />
-            </InputBlock>
+            <Input name="name" label="Nome" />
 
-            <InputBlock>
-              <label htmlFor="about">
-                Sobre <span>Máximo de 300 caracteres</span>{' '}
-              </label>
-              <textarea id="about" maxLength={300} onChange={() => {}} />
-            </InputBlock>
+            <Textarea name="about" label="Sobre" maxCharacter="300" />
 
-            <InputBlock>
-              <label htmlFor="whatsapp_phone">Número Whatsapp</label>
-              <input id="whatsapp_phone" type="text" onChange={() => {}} />
-            </InputBlock>
+            <Input name="whatsapp_phone" label="Número Whatsapp" />
 
             <InputBlock>
               <label htmlFor="images">Fotos</label>
@@ -124,15 +124,13 @@ const CreateRestaurant: React.FC = () => {
           <fieldset>
             <legend>Visitação</legend>
 
-            <InputBlock>
-              <label htmlFor="instructions">Instruções</label>
-              <textarea id="name" onChange={() => {}} />
-            </InputBlock>
+            <Textarea
+              name="instructions"
+              label="Instruções"
+              maxCharacter="500"
+            />
 
-            <InputBlock>
-              <label htmlFor="opening_hours">Horário de funcionamento</label>
-              <input id="opening_hours" type="text" onChange={() => {}} />
-            </InputBlock>
+            <Input name="opening_hours" label="Horário de funcionamento" />
 
             <InputBlock>
               <label htmlFor="open_on_weekends">Atende fim de semana</label>
@@ -149,7 +147,7 @@ const CreateRestaurant: React.FC = () => {
           </fieldset>
 
           <button type="submit">Confirmar</button>
-        </form>
+        </Form>
       </main>
     </Container>
   )
