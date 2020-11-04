@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
 export const Container = styled.div`
   width: 100vw;
@@ -13,6 +14,7 @@ export const Container = styled.div`
 export const Content = styled.div`
   width: 1100px;
   height: 100%;
+  padding-top: 32px;
 
   display: flex;
   flex-direction: column;
@@ -62,32 +64,6 @@ export const Content = styled.div`
       height: 429px;
       transform: rotate(7.12deg);
     }
-
-    button {
-      width: 80px;
-      height: 80px;
-      margin-top: 440px;
-      border: 0;
-      border-radius: 20px;
-      background: var(--color-buttonSecondary);
-      transition: background 0.2s;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      svg {
-        color: var(--color-textButtonSecondary);
-      }
-
-      &:hover {
-        background: var(--color-buttonSecondaryHover);
-
-        svg {
-          color: var(--color-textButtonSecondaryHover);
-        }
-      }
-    }
   }
 `
 
@@ -117,5 +93,30 @@ export const TitleContainer = styled.div`
   p {
     margin-top: 32px;
     color: var(--color-textSecondary);
+  }
+`
+export const Navigate = styled(Link)`
+  width: 80px;
+  height: 80px;
+  margin-top: 440px;
+  border: 0;
+  border-radius: 20px;
+  background: var(--color-buttonSecondary);
+  transition: background 0.2s;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    color: var(--color-textButtonSecondary);
+  }
+
+  &:hover {
+    background: var(--color-buttonSecondaryHover);
+
+    svg {
+      color: var(--color-textButtonSecondaryHover);
+    }
   }
 `

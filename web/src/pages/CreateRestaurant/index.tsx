@@ -25,19 +25,14 @@ interface IFormSubmitData {
   name: string
   about: string
   whatsapp_phone: string
-  street: string
-  number: string
-  neighborhood: string
-  city: string
-  state: string
-  zipcode: string
   instructions: string
   opening_hours: string
 }
 
 const CreateRestaurant: React.FC = () => {
   const [position, setPosition] = useState({ latitude: 0, longitude: 0 })
-  const [openOnWeekends, setOpenOnWeekends] = useState(0)
+  const [openOnWeekends, setOpenOnWeekends] = useState(false)
+  const [activeButton, setActiveButton] = useState(0)
   const [previewImages, setPreviewImages] = useState<string[]>([])
   const [images, setImages] = useState<File[]>([])
 
@@ -51,6 +46,11 @@ const CreateRestaurant: React.FC = () => {
       latitude: lat,
       longitude: lng
     })
+  }, [])
+
+  const handleOpenOnWeekends = useCallback((isOPen, selectedButton) => {
+    setOpenOnWeekends(isOPen)
+    setActiveButton(selectedButton)
   }, [])
 
   const handleSelectImage = useCallback(
@@ -77,32 +77,16 @@ const CreateRestaurant: React.FC = () => {
       name,
       about,
       whatsapp_phone,
-      street,
-      number,
-      neighborhood,
-      city,
-      state,
-      zipcode,
       instructions,
       opening_hours
     }: IFormSubmitData) => {
       const data = new FormData()
-
-      const address = {
-        street,
-        number,
-        neighborhood,
-        city,
-        state,
-        zipcode
-      }
 
       data.append('name', name)
       data.append('about', about)
       data.append('latitude', String(position.latitude))
       data.append('longitude', String(position.longitude))
       data.append('whatsapp_phone', whatsapp_phone)
-      data.append('address', JSON.stringify(address))
       data.append('instructions', instructions)
       data.append('opening_hours', opening_hours)
       data.append('open_on_weekends', String(!!openOnWeekends))
@@ -180,17 +164,6 @@ const CreateRestaurant: React.FC = () => {
           </fieldset>
 
           <fieldset>
-            <legend>Endereço</legend>
-
-            <Input name="street" label="Rua" />
-            <Input name="number" label="Número" />
-            <Input name="neighborhood" label="Bairro" />
-            <Input name="city" label="Cidade" />
-            <Input name="state" label="Estado" />
-            <Input name="zipcode" label="CEP" />
-          </fieldset>
-
-          <fieldset>
             <legend>Visitação</legend>
 
             <Textarea
@@ -204,11 +177,17 @@ const CreateRestaurant: React.FC = () => {
             <InputBlock>
               <label htmlFor="open_on_weekends">Atende fim de semana</label>
 
-              <ButtonSelectContainer activeButton={openOnWeekends}>
-                <button type="button" onClick={() => setOpenOnWeekends(1)}>
+              <ButtonSelectContainer activeButton={activeButton}>
+                <button
+                  type="button"
+                  onClick={() => handleOpenOnWeekends(true, 1)}
+                >
                   Sim
                 </button>
-                <button type="button" onClick={() => setOpenOnWeekends(2)}>
+                <button
+                  type="button"
+                  onClick={() => handleOpenOnWeekends(false, 2)}
+                >
                   Não
                 </button>
               </ButtonSelectContainer>

@@ -44,13 +44,13 @@ const Restaurant: React.FC = () => {
   const [restaurant, setRestaurant] = useState<IRestaurant>()
   const [activeImageIndex, setActiveImageIndex] = useState(0)
 
-  const { restaurant_id } = useParams<IRouteParamsProps>()
+  const params = useParams<IRouteParamsProps>()
 
   useEffect(() => {
     api
-      .get(`/restaurants/${restaurant_id}`)
+      .get(`/restaurants/${params.restaurant_id}`)
       .then(response => setRestaurant(response.data))
-  }, [restaurant_id])
+  }, [params])
 
   if (!restaurant) {
     return <p>Carregando...</p>
@@ -71,6 +71,7 @@ const Restaurant: React.FC = () => {
             {restaurant.images.map((image, index) => {
               return (
                 <button
+                  key={image.id}
                   type="button"
                   onClick={() => setActiveImageIndex(index)}
                 >
@@ -124,7 +125,7 @@ const Restaurant: React.FC = () => {
 
             <hr />
 
-            <h2>Instruções para visita</h2>
+            <h2>Instruções</h2>
             <p>{restaurant.instructions}</p>
 
             <OpenDetails>

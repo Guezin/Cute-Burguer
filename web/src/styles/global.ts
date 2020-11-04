@@ -5,6 +5,7 @@ export default createGlobalStyle`
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    text-decoration: none;
   }
 
   body {
@@ -27,6 +28,7 @@ export default createGlobalStyle`
     --color-background: #EBF2F5;
     --color-landingPage: linear-gradient(107.97deg, #9C3F3A 0%, #B32728 100%);
     --color-donePage: #F56D22;
+    --color-signInPage: linear-gradient(107.97deg, #9C3F3A 0%, #B32728 100%);
     --color-buttonPrimary: #FF6400;
     --color-textButtonPrimary: #FFF;
     --color-buttonPrimaryHover: #F23132;
@@ -61,5 +63,7 @@ export default createGlobalStyle`
     --color-border-form: #d3e2e5;
     --color-text-label: #8FA7B2;
     --color-background-input: #f5f8fa;
+    --color-buttonGoBack: #EBF2F5;
+
   }
 `

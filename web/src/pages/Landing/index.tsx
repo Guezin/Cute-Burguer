@@ -1,19 +1,19 @@
-import React, { useCallback } from 'react'
-import { useHistory } from 'react-router-dom'
+import React from 'react'
+
 import { FiArrowRight } from 'react-icons/fi'
 
 import logoImg from '../../images/logo.png'
 import ilustraLandingImg from '../../images/ilustra-landing.png'
 
-import { Container, Content, Location, TitleContainer } from './styles'
+import {
+  Container,
+  Content,
+  Location,
+  TitleContainer,
+  Navigate
+} from './styles'
 
 const Landing: React.FC = () => {
-  const history = useHistory()
-
-  const handleNavigateToRestaurantsMapScreen = useCallback(() => {
-    history.push('/restaurants-map')
-  }, [history])
-
   return (
     <Container>
       <Content>
@@ -43,9 +43,9 @@ const Landing: React.FC = () => {
 
           <img src={ilustraLandingImg} alt="Cute Burguer" />
 
-          <button type="button" onClick={handleNavigateToRestaurantsMapScreen}>
+          <Navigate to="/restaurants">
             <FiArrowRight size={26} />
-          </button>
+          </Navigate>
         </main>
       </Content>
     </Container>

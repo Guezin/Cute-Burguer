@@ -1,17 +1,10 @@
-import React, { useCallback } from 'react'
-import { useHistory } from 'react-router-dom'
+import React from 'react'
 
 import doneImg from '../../images/ilustra-done.png'
 
-import { Container, Content, ImageContainer } from './styles'
+import { Container, Content, Navigate, ImageContainer } from './styles'
 
 const Done: React.FC = () => {
-  const history = useHistory()
-
-  const handleNavigateToRestaurantsMapScreen = useCallback(() => {
-    history.push('/restaurants-map')
-  }, [history])
-
   return (
     <Container>
       <main>
@@ -23,9 +16,7 @@ const Done: React.FC = () => {
             aprovado. Agora é só esperar :)
           </p>
 
-          <button type="button" onClick={handleNavigateToRestaurantsMapScreen}>
-            Voltar para o mapa
-          </button>
+          <Navigate to="/restaurants">Voltar para o mapa</Navigate>
         </Content>
 
         <ImageContainer>

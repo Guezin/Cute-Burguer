@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet'
-import { Link, useHistory } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { FiArrowRight, FiPlus } from 'react-icons/fi'
 import Leaflet from 'leaflet'
 
@@ -21,18 +21,10 @@ interface IRestaurant {
 const RestaurantsMap: React.FC = () => {
   const [restaurants, setRestaurants] = useState<IRestaurant[]>([])
 
-  const history = useHistory()
-
-  const handleNavigateToCreateRestaurantScreen = useCallback(() => {
-    history.push('/restaurants/create')
-  }, [history])
-
   useEffect(() => {
-    ;(async () => {
-      const { data } = await api.get('/restaurants/approved')
-
-      setRestaurants(data)
-    })()
+    api
+      .get('/restaurants/approved')
+      .then(response => setRestaurants(response.data))
   }, [])
 
   return (
@@ -86,7 +78,7 @@ const RestaurantsMap: React.FC = () => {
         ))}
       </Map>
 
-      <CreateRestaurantButton onClick={handleNavigateToCreateRestaurantScreen}>
+      <CreateRestaurantButton to="/restaurants/create">
         <FiPlus size={32} color="#fff" />
       </CreateRestaurantButton>
     </Container>

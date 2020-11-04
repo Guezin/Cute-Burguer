@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
 export const Container = styled.div`
   width: 100vw;
@@ -80,7 +81,7 @@ export const Container = styled.div`
     }
   }
 `
-export const CreateRestaurantButton = styled.button`
+export const CreateRestaurantButton = styled(Link)`
   position: absolute;
   right: 40px;
   bottom: 40px;

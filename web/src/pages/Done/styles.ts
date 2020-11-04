@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
 export const Container = styled.div`
   width: 100vw;
@@ -40,21 +41,26 @@ export const Content = styled.div`
     font-size: 20px;
     line-height: 34px;
   }
+`
 
-  button {
-    width: 243px;
-    height: 64px;
-    margin-top: 32px;
-    border: 0;
-    border-radius: 20px;
-    background: var(--color-buttonQuarterly);
-    color: var(--color-textButtonQuarterly);
-    font-weight: 700;
-    transition: background 0.2s;
+export const Navigate = styled(Link)`
+  width: 243px;
+  height: 64px;
+  margin-top: 32px;
+  border: 0;
+  border-radius: 20px;
+  background: var(--color-buttonQuarterly);
+  color: var(--color-textButtonQuarterly);
+  font-weight: 700;
+  transition: background 0.2s;
+  text-decoration: none;
 
-    &:hover {
-      background: var(--color-buttonQuarterlyHover);
-    }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background: var(--color-buttonQuarterlyHover);
   }
 `
 
