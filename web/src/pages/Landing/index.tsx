@@ -9,6 +9,7 @@ import {
   Container,
   Content,
   Location,
+  RestrictedAccess,
   TitleContainer,
   Navigate
 } from './styles'
@@ -27,9 +28,9 @@ const Landing: React.FC = () => {
             </Location>
           </div>
 
-          <button type="button">
+          <RestrictedAccess to="/signIn">
             <strong>Acesso restrito</strong>
-          </button>
+          </RestrictedAccess>
         </header>
         <main>
           <TitleContainer>

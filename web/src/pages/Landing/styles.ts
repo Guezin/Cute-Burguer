@@ -35,21 +35,6 @@ export const Content = styled.div`
         height: 152px;
       }
     }
-
-    button {
-      width: 222px;
-      height: 56px;
-      border: 0;
-      background: var(--color-buttonPrimary);
-      color: var(--color-textButtonPrimary);
-      border-radius: 20px;
-      transition: background 0.2s;
-
-      &:hover {
-        background: var(--color-buttonPrimaryHover);
-        color: var(--color-textButtonPrimaryHover);
-      }
-    }
   }
 
   main {
@@ -76,6 +61,25 @@ export const Location = styled.div`
 
   strong {
     font-weight: 800;
+  }
+`
+
+export const RestrictedAccess = styled(Link)`
+  width: 222px;
+  height: 56px;
+  border: 0;
+  background: var(--color-buttonPrimary);
+  color: var(--color-textButtonPrimary);
+  border-radius: 20px;
+  transition: background 0.2s;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background: var(--color-buttonPrimaryHover);
+    color: var(--color-textButtonPrimaryHover);
   }
 `
 
