@@ -22,18 +22,24 @@ interface IRestaurants {
 
 const Dashboard: React.FC = () => {
   const [restaurants, setRestaurants] = useState<IRestaurants[]>([])
+  const [notification, setNotification] = useState(false)
 
   useEffect(() => {
     ;(async () => {
-      const { data } = await api.get('/restaurants/approved')
+      const restaurantsApproved = await api.get('/restaurants/approved')
+      const restaurantsPending = await api.get('/restaurants/pending')
 
-      setRestaurants(data)
+      if (!!restaurantsPending.data.length) {
+        setNotification(true)
+      }
+
+      setRestaurants(restaurantsApproved.data)
     })()
   }, [])
 
   return (
     <Container>
-      <Sidebar />
+      <Sidebar active="/dashboard" showButtons hasNotification={notification} />
 
       <Content>
         <header>
