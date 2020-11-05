@@ -11,12 +11,22 @@ import SignInScreen from './pages/SignIn'
 import ForgotPasswordScreen from './pages/ForgotPassword'
 
 import DashboardScreen from './pages/Dashboard'
+import RestaurantsPendingScreen from './pages/RestaurantsPending'
 
 const Routes: React.FC = () => {
   return (
     <BrowserRouter>
       <Switch>
         <Route path="/" exact component={LandingScreen} />
+
+        <Route path="/signIn" component={SignInScreen} />
+        <Route path="/forgot-password" component={ForgotPasswordScreen} />
+
+        <Route path="/dashboard" component={DashboardScreen} />
+        <Route
+          path="/restaurants/pending"
+          component={RestaurantsPendingScreen}
+        />
 
         <Route path="/restaurants" exact component={RestaurantsMapScreen} />
         <Route path="/restaurants/create" component={CreateRestaurantScreen} />
@@ -26,11 +36,6 @@ const Routes: React.FC = () => {
         />
 
         <Route path="/done" component={DoneScreen} />
-
-        <Route path="/signIn" component={SignInScreen} />
-        <Route path="/forgot-password" component={ForgotPasswordScreen} />
-
-        <Route path="/dashboard" component={DashboardScreen} />
       </Switch>
     </BrowserRouter>
   )
