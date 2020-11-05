@@ -62,7 +62,9 @@ const SignIn: React.FC = () => {
                   Lembrar-me
                 </RememberMeContainer>
 
-                <ForgotPassword to="">Esqueci minha senha</ForgotPassword>
+                <ForgotPassword to="/forgot-password">
+                  Esqueci minha senha
+                </ForgotPassword>
               </Section>
 
               <button type="submit">Entrar</button>
