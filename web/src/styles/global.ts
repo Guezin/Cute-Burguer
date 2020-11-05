@@ -48,7 +48,7 @@ export default createGlobalStyle`
     --color-background-sidebar: #9C3F3A;
     --color-textPrimary: #5C8599;
     --color-titlePrimary: #4d6f80;
-    --color-hr: #d3e2e6;
+    --color-hr: #D3E2E5;
     --color-buttonWhatsapp: #FF6400;
     --color-textButtonWhatsapp: #FFF;
     --color-buttonWhatsappHover: #E5681F;
@@ -64,6 +64,8 @@ export default createGlobalStyle`
     --color-text-label: #8FA7B2;
     --color-background-input: #f5f8fa;
     --color-buttonGoBack: #EBF2F5;
+    --color-buttonEdit: #EBF2F5;
+    --color-buttonDelete: #EBF2F5;
 
   }
 `

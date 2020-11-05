@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react'
 import { FiCheck, FiArrowLeft } from 'react-icons/fi'
+import { useHistory } from 'react-router-dom'
 import { Form } from '@unform/web'
 
 import Input from '../../components/Input'
@@ -19,6 +20,12 @@ import {
 
 const SignIn: React.FC = () => {
   const [rememberMe, setRememberMe] = useState(false)
+
+  const history = useHistory()
+
+  const handleSubmit = useCallback(() => {
+    history.push('/dashboard')
+  }, [history])
 
   const handleRememberMeCheckBox = useCallback(() => {
     setRememberMe(!rememberMe)
@@ -44,7 +51,7 @@ const SignIn: React.FC = () => {
           <fieldset>
             <legend>Fazer login</legend>
 
-            <Form onSubmit={() => {}}>
+            <Form onSubmit={handleSubmit}>
               <Input name="email" label="E-mail" />
               <Input name="password" label="Senha" />
 

@@ -17,7 +17,7 @@ const LeafletMap: React.FC<ILeafletMapProps> = ({
   children
 }) => {
   return (
-    <Container style={{ width: width || '100%', height: 280 }}>
+    <Container style={{ width: width || '100%', height: 308 }}>
       <Map
         center={[-23.4516163, -46.7279187]}
         zoom={16}
