@@ -1,10 +1,6 @@
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { darken } from 'polished'
-
-interface IRememberMeCheckBoxProps {
-  remember: boolean
-}
 
 export const Container = styled.div`
   width: 100vw;

@@ -10,6 +10,8 @@ import DoneScreen from './pages/Done'
 import SignInScreen from './pages/SignIn'
 import ForgotPasswordScreen from './pages/ForgotPassword'
 
+import DashboardScreen from './pages/Dashboard'
+
 const Routes: React.FC = () => {
   return (
     <BrowserRouter>
@@ -27,6 +29,8 @@ const Routes: React.FC = () => {
 
         <Route path="/signIn" component={SignInScreen} />
         <Route path="/forgot-password" component={ForgotPasswordScreen} />
+
+        <Route path="/dashboard" component={DashboardScreen} />
       </Switch>
     </BrowserRouter>
   )

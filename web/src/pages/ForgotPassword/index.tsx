@@ -1,5 +1,5 @@
-import React, { useCallback, useState } from 'react'
-import { FiCheck, FiArrowLeft } from 'react-icons/fi'
+import React from 'react'
+import { FiArrowLeft } from 'react-icons/fi'
 import { Form } from '@unform/web'
 
 import Input from '../../components/Input'
