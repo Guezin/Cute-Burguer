@@ -58,7 +58,7 @@ export const ButtonContainer = styled.div`
 `
 
 export const EditButton = styled(Link)`
-  padding: 6px 8px;
+  padding: 8px 10px;
   margin-right: 8px;
   border-radius: 8px;
   background: var(--color-buttonEdit);
@@ -67,7 +67,7 @@ export const EditButton = styled(Link)`
 `
 
 export const DeleteButton = styled(Link)`
-  padding: 6px 8px;
+  padding: 8px 10px;
   border-radius: 8px;
   background: var(--color-buttonEdit);
 
