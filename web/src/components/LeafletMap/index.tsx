@@ -9,17 +9,19 @@ import { Container } from './styles'
 interface ILeafletMapProps {
   width?: string | number
   height?: string | number
+  position: [number, number]
 }
 
 const LeafletMap: React.FC<ILeafletMapProps> = ({
   width,
   height,
+  position,
   children
 }) => {
   return (
     <Container style={{ width: width || '100%', height: 308 }}>
       <Map
-        center={[-23.4516163, -46.7279187]}
+        center={position}
         zoom={16}
         style={{ width: width || '100%', height: height || 227 }}
         dragging={false}
@@ -40,7 +42,7 @@ const LeafletMap: React.FC<ILeafletMapProps> = ({
             iconAnchor: [34, 56],
             popupAnchor: [-9, -60]
           })}
-          position={[-23.4516163, -46.7279187]}
+          position={position}
         />
       </Map>
 

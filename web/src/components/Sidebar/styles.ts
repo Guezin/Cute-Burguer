@@ -25,25 +25,6 @@ export const Aside = styled.aside`
     display: flex;
     flex-direction: column;
   }
-
-  footer {
-    button {
-      width: 48px;
-      height: 48px;
-      border: 0;
-      background: var(--color-buttonTertiary);
-      border-radius: 16px;
-      transition: background 0.2s;
-
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      &:hover {
-        background: var(--color-buttonTertiaryHover);
-      }
-    }
-  }
 `
 export const Navigate = styled(Link)<INavigateProps>`
   padding: 12px;
@@ -82,4 +63,16 @@ export const Notification = styled.div`
   background: var(--color-buttonSecondary);
   position: absolute;
   right: 53px;
+`
+export const LogoutButton = styled(Link)`
+  padding: 12px;
+  border-radius: 16px;
+  background: var(--color-buttonTertiary);
+  transition: background 0.2s;
+
+  display: flex;
+
+  &:hover {
+    background: var(--color-buttonTertiaryHover);
+  }
 `

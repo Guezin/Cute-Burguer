@@ -18,6 +18,8 @@ import {
 interface IRestaurants {
   restaurant_id: string
   name: string
+  latitude: number
+  longitude: number
 }
 
 const Dashboard: React.FC = () => {
@@ -57,6 +59,7 @@ const Dashboard: React.FC = () => {
                 key={restaurant.restaurant_id}
                 width={480}
                 height={232}
+                position={[restaurant.latitude, restaurant.longitude]}
               >
                 <FooterLeafletMap>
                   <h1>{restaurant.name}</h1>
