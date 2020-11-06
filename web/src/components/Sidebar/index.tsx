@@ -1,21 +1,26 @@
 import React from 'react'
-import { FiPower, FiMapPin, FiAlertCircle } from 'react-icons/fi'
+import { FiMapPin, FiAlertCircle, FiArrowLeft, FiPower } from 'react-icons/fi'
+import { useHistory } from 'react-router-dom'
 
 import logoImg from '../../images/logo.png'
 
-import { Aside, Navigate, Notification, LogoutButton } from './styles'
+import { Aside, Navigate, Notification, Button } from './styles'
 
 interface ISidebarProps {
   showButtons?: boolean
   active?: string
   hasNotification?: boolean
+  goBack?: boolean
 }
 
 const Sidebar: React.FC<ISidebarProps> = ({
   showButtons,
   active,
+  goBack,
   hasNotification
 }) => {
+  const history = useHistory()
+
   return (
     <Aside>
       <img src={logoImg} alt="Cute Burguer" />
@@ -38,9 +43,15 @@ const Sidebar: React.FC<ISidebarProps> = ({
       )}
 
       <footer>
-        <LogoutButton to="/">
-          <FiPower size={24} color="#FFF" />
-        </LogoutButton>
+        {goBack ? (
+          <button type="button" onClick={history.goBack}>
+            <FiArrowLeft size={24} color="#FFF" />
+          </button>
+        ) : (
+          <Button to="/">
+            <FiPower size={24} color="#FFF" />
+          </Button>
+        )}
       </footer>
     </Aside>
   )

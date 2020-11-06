@@ -12,6 +12,7 @@ import ForgotPasswordScreen from './pages/ForgotPassword'
 
 import DashboardScreen from './pages/Dashboard'
 import RestaurantsPendingScreen from './pages/RestaurantsPending'
+import RestaurantApproveScreen from './pages/RestaurantApprove'
 
 const Routes: React.FC = () => {
   return (
@@ -30,6 +31,10 @@ const Routes: React.FC = () => {
 
         <Route path="/restaurants" exact component={RestaurantsMapScreen} />
         <Route path="/restaurants/create" component={CreateRestaurantScreen} />
+        <Route
+          path="/restaurants/:restaurant_id/approve"
+          component={RestaurantApproveScreen}
+        />
         <Route
           path="/restaurants/:restaurant_id"
           component={RestaurantScreen}
