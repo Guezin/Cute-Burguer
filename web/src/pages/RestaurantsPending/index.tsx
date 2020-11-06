@@ -51,7 +51,9 @@ const RestaurantsPending: React.FC = () => {
                 <FooterLeafletMap>
                   <h1>{restaurant.name}</h1>
 
-                  <ButtonContainer to="">
+                  <ButtonContainer
+                    to={`/restaurants/${restaurant.restaurant_id}/approve`}
+                  >
                     <FiArrowRight size={18} color="#A32121" />
                   </ButtonContainer>
                 </FooterLeafletMap>
